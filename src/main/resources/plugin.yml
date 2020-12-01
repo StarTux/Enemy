@@ -1,0 +1,27 @@
+main: com.cavetale.enemy.EnemyPlugin
+
+name: Enemy
+version: 0.1
+description: Enemy Plugin
+api-version: 1.13
+
+author: StarTux
+website: https://github.com/StarTux/Enemy
+
+depend: []
+softdepend: []
+
+commands:
+
+  enemy:
+    aliases: []
+    description: Enemy Command
+    permission: enemy.enemy
+    usage: |-
+      /enemy
+
+permissions:
+
+  enemy.enemy:
+    description: Use /enemy
+    default: op
