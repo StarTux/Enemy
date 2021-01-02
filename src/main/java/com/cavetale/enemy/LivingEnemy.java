@@ -15,6 +15,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Projectile;
+import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -134,6 +135,11 @@ public abstract class LivingEnemy implements Enemy {
         @Override
         public void onEntitySpellCast(EntitySpellCastEvent event) {
             onSpellCast(event);
+        }
+
+        @Override
+        public void onRandomEvent(Event event) {
+            LivingEnemy.this.onRandomEvent(event);
         }
     }
 
@@ -350,4 +356,6 @@ public abstract class LivingEnemy implements Enemy {
     protected void onPathfind(EntityPathfindEvent event) { }
 
     protected void onSpellCast(EntitySpellCastEvent event) { }
+
+    protected void onRandomEvent(Event event) { }
 }

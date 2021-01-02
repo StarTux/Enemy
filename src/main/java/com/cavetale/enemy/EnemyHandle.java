@@ -4,6 +4,7 @@ import com.cavetale.worldmarker.EntityMarker;
 import com.cavetale.worldmarker.Persistent;
 import com.destroystokyo.paper.event.entity.EntityPathfindEvent;
 import org.bukkit.entity.Entity;
+import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -36,4 +37,6 @@ public interface EnemyHandle extends Persistent {
     static EnemyHandle of(Entity entity) {
         return EntityMarker.getEntity(entity).getPersistent(Enemy.WORLD_MARKER_ID, EnemyHandle.class);
     }
+
+    default void onRandomEvent(Event event) { }
 }

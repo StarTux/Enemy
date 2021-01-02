@@ -3,12 +3,14 @@ package com.cavetale.enemy.boss;
 import com.cavetale.enemy.Context;
 import com.cavetale.enemy.LivingEnemy;
 import com.cavetale.enemy.ability.AbilityPhases;
+import com.cavetale.enemy.ability.ArrowStormAbility;
 import com.cavetale.enemy.ability.DialogueAbility;
 import com.cavetale.enemy.ability.HomeAbility;
 import com.cavetale.enemy.ability.PauseAbility;
 import com.cavetale.enemy.ability.PushAbility;
 import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.util.Prep;
+import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
 import java.util.Arrays;
 import java.util.List;
 import lombok.Getter;
@@ -18,7 +20,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public final class QuickBoss extends LivingEnemy {
     @Getter private double maxHealth = 500;
@@ -50,6 +55,16 @@ public final class QuickBoss extends LivingEnemy {
         SpawnAddsAbility adds = phases.addAbility(new SpawnAddsAbility(this, context));
         adds.add(addType.getEntityClass(), 8, 1, this::prepAdd);
         phases.addAbility(new HomeAbility(this, context));
+        if (bossType == EntityType.STRAY) {
+            // Icekelly
+            ArrowStormAbility arrowStorm = phases.addAbility(new ArrowStormAbility(this, context));
+            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 0, true, false, true));
+            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 300, 0, true, false, true));
+            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 0, true, false, true));
+            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 0, true, false, true));
+            arrowStorm.setDuration(200);
+            arrowStorm.setInterval(10);
+        }
         phases.begin();
     }
 
@@ -81,5 +96,13 @@ public final class QuickBoss extends LivingEnemy {
     @Override
     public List<ItemStack> getDrops() {
         return Arrays.asList(new ItemStack(Material.DIAMOND));
+    }
+
+    @Override
+    public void onRandomEvent(Event event) {
+        if (event instanceof WitchConsumePotionEvent) {
+            ((WitchConsumePotionEvent) event).setCancelled(true);
+            return;
+        }
     }
 }

@@ -5,6 +5,7 @@ import com.cavetale.enemy.ability.FireworkAbility;
 import com.cavetale.worldmarker.EntityMarker;
 import com.destroystokyo.paper.event.entity.EntityPathfindEvent;
 import com.destroystokyo.paper.event.entity.ProjectileCollideEvent;
+import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -121,5 +122,12 @@ public final class EnemyListener implements Listener {
         EnemyHandle handle = EnemyHandle.of(event.getEntity());
         if (handle == null) return;
         handle.onEntitySpellCast(event);
+    }
+
+    @EventHandler
+    void onWitchPotionConsume(WitchConsumePotionEvent event) {
+        EnemyHandle handle = EnemyHandle.of(event.getEntity());
+        if (handle == null) return;
+        handle.onRandomEvent(event);
     }
 }
