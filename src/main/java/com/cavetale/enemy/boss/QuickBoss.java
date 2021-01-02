@@ -4,7 +4,6 @@ import com.cavetale.enemy.Context;
 import com.cavetale.enemy.LivingEnemy;
 import com.cavetale.enemy.ability.AbilityPhases;
 import com.cavetale.enemy.ability.ArrowStormAbility;
-import com.cavetale.enemy.ability.DialogueAbility;
 import com.cavetale.enemy.ability.HomeAbility;
 import com.cavetale.enemy.ability.PauseAbility;
 import com.cavetale.enemy.ability.PushAbility;
@@ -20,6 +19,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -46,10 +47,6 @@ public final class QuickBoss extends LivingEnemy {
         living = (LivingEntity) location.getWorld().spawn(location, bossType.getEntityClass(), this::prep);
         markLiving();
         phases = new AbilityPhases();
-        DialogueAbility dialogue = phases.addAbility(new DialogueAbility(this, context));
-        dialogue.addDialogue("You just wait!");
-        dialogue.addDialogue("No escape!");
-        dialogue.addDialogue("No soup for you.");
         phases.addAbility(new PushAbility(this, context));
         PauseAbility pause = phases.addAbility(new PauseAbility(this, context, 100));
         SpawnAddsAbility adds = phases.addAbility(new SpawnAddsAbility(this, context));
@@ -79,6 +76,40 @@ public final class QuickBoss extends LivingEnemy {
     public void tick() {
         phases.tick();
         health = living.getHealth();
+        if (living instanceof Mob) {
+            Mob mob = (Mob) living;
+            if (!(mob.getTarget() instanceof Player)) {
+                Player target = findTarget();
+                if (target != null) mob.setTarget(target);
+            }
+        }
+    }
+
+    private Player findTarget() {
+        List<Player> players = context.getPlayers();
+        Location eye = getEyeLocation();
+        double minVisible = Double.MAX_VALUE;
+        double minBlind = Double.MAX_VALUE;
+        Player visible = null;
+        Player blind = null;
+        final double maxVisible = 32 * 32;
+        final double maxBlind = 16 * 16;
+        for (Player player : players) {
+            if (!player.isOnGround()) continue;
+            double dist = player.getEyeLocation().distanceSquared(eye);
+            if (living == null || living.hasLineOfSight(player)) {
+                if (dist < minVisible && dist < maxVisible) {
+                    visible = player;
+                    minVisible = dist;
+                }
+            } else {
+                if (dist < minBlind && dist < maxBlind) {
+                    blind = player;
+                    minBlind = dist;
+                }
+            }
+        }
+        return visible != null ? visible : null;
     }
 
     private void prep(Entity entity) {
