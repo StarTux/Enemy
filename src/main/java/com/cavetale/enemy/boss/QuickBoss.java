@@ -16,6 +16,7 @@ import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Bee;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -50,7 +51,11 @@ public final class QuickBoss extends LivingEnemy {
         phases.addAbility(new PushAbility(this, context));
         PauseAbility pause = phases.addAbility(new PauseAbility(this, context, 100));
         SpawnAddsAbility adds = phases.addAbility(new SpawnAddsAbility(this, context));
-        adds.add(addType.getEntityClass(), 8, 1, this::prepAdd);
+        if (addType == EntityType.BEE) {
+            adds.add(addType.getEntityClass(), 32, 1, this::prepAdd);
+        } else {
+            adds.add(addType.getEntityClass(), 8, 1, this::prepAdd);
+        }
         phases.addAbility(new HomeAbility(this, context));
         if (bossType == EntityType.STRAY) {
             // Icekelly
@@ -82,6 +87,9 @@ public final class QuickBoss extends LivingEnemy {
                 Player target = findTarget();
                 if (target != null) mob.setTarget(target);
             }
+        }
+        if (living instanceof Bee) {
+            ((Bee) living).setHasStung(false);
         }
     }
 
