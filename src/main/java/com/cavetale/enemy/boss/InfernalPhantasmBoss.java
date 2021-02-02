@@ -62,7 +62,7 @@ public final class InfernalPhantasmBoss extends LivingEnemy {
     }
 
     private void prepPiglinBrute(PiglinBrute brute) {
-        brute.setBaby(false);
+        brute.setBaby();
         brute.setImmuneToZombification(true);
         Prep.add(brute);
     }
