@@ -58,6 +58,7 @@ public final class Prep {
         attr(entity, Attribute.GENERIC_ARMOR_TOUGHNESS, 8.0); // dia=8
         entity.setCustomNameVisible(true);
         entity.setPersistent(false);
+        entity.setMaximumNoDamageTicks(0);
         disableEquipmentDrop(entity);
     }
 
