@@ -21,6 +21,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
+import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
@@ -47,6 +48,9 @@ public final class QuickBoss extends LivingEnemy {
     public void spawn(Location location) {
         living = (LivingEntity) location.getWorld().spawn(location, bossType.getEntityClass(), this::prep);
         markLiving();
+        if (living instanceof Phantom) {
+            ((Phantom) living).setSize(20);
+        }
         phases = new AbilityPhases();
         phases.addAbility(new PushAbility(this, context));
         PauseAbility pause = phases.addAbility(new PauseAbility(this, context, 100));
