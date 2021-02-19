@@ -1,7 +1,5 @@
 package com.cavetale.enemy;
 
-import com.cavetale.worldmarker.EntityMarker;
-import com.cavetale.worldmarker.Persistent;
 import com.destroystokyo.paper.event.entity.EntityPathfindEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
@@ -12,13 +10,8 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 
-public interface EnemyHandle extends Persistent {
+public interface EnemyHandle {
     Enemy getEnemy();
-
-    @Override
-    default boolean shouldSave() {
-        return false;
-    }
 
     default void onEntityDeath(EntityDeathEvent event) { }
 
@@ -35,8 +28,12 @@ public interface EnemyHandle extends Persistent {
     default void onEntitySpellCast(EntitySpellCastEvent event) { }
 
     static EnemyHandle of(Entity entity) {
-        return EntityMarker.getEntity(entity).getPersistent(Enemy.WORLD_MARKER_ID, EnemyHandle.class);
+        return EnemyPlugin.getHandle(entity);
     }
 
     default void onRandomEvent(Event event) { }
+
+    void onEnable();
+
+    void onDisable();
 }

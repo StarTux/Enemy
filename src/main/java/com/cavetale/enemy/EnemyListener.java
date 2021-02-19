@@ -2,8 +2,9 @@ package com.cavetale.enemy;
 
 import com.cavetale.enemy.ability.EggLauncherAbility;
 import com.cavetale.enemy.ability.FireworkAbility;
-import com.cavetale.worldmarker.EntityMarker;
+import com.cavetale.worldmarker.entity.EntityMarker;
 import com.destroystokyo.paper.event.entity.EntityPathfindEvent;
+import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
 import com.destroystokyo.paper.event.entity.ProjectileCollideEvent;
 import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
 import lombok.RequiredArgsConstructor;
@@ -129,5 +130,12 @@ public final class EnemyListener implements Listener {
         EnemyHandle handle = EnemyHandle.of(event.getEntity());
         if (handle == null) return;
         handle.onRandomEvent(event);
+    }
+
+    @EventHandler
+    void onEntityRemoveFromWorld(EntityRemoveFromWorldEvent event) {
+        EnemyHandle handle = EnemyPlugin.removeHandle(event.getEntity());
+        if (handle == null) return;
+        handle.onDisable();
     }
 }

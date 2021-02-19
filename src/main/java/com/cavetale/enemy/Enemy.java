@@ -1,6 +1,5 @@
 package com.cavetale.enemy;
 
-import com.cavetale.worldmarker.EntityMarker;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -107,7 +106,7 @@ public interface Enemy {
      * Get the Enemy that belongs to this entity, or null if none is found.
      */
     static Enemy of(Entity entity) {
-        EnemyHandle handle = EntityMarker.getEntity(entity).getPersistent(Enemy.WORLD_MARKER_ID, EnemyHandle.class);
+        EnemyHandle handle = EnemyPlugin.getHandle(entity);
         if (handle == null) return null;
         return handle.getEnemy();
     }

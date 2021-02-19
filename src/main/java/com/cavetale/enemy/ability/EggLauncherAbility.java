@@ -2,7 +2,7 @@ package com.cavetale.enemy.ability;
 
 import com.cavetale.enemy.Context;
 import com.cavetale.enemy.Enemy;
-import com.cavetale.worldmarker.EntityMarker;
+import com.cavetale.worldmarker.entity.EntityMarker;
 import java.util.List;
 import java.util.Random;
 import lombok.Getter;

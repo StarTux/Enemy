@@ -1,13 +1,13 @@
 package com.cavetale.enemy;
 
-import com.cavetale.worldmarker.EntityMarker;
-import com.cavetale.worldmarker.MarkTagContainer;
+import com.cavetale.worldmarker.entity.EntityMarker;
 import com.destroystokyo.paper.event.entity.EntityPathfindEvent;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
@@ -23,6 +23,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
@@ -45,7 +46,7 @@ public abstract class LivingEnemy implements Enemy {
 
     public final void markLiving() {
         EntityMarker.setId(living, WORLD_MARKER_ID);
-        EntityMarker.getEntity(living).getPersistent(context.getPlugin(), WORLD_MARKER_ID, Handle.class, () -> new Handle());
+        EnemyPlugin.setHandle(living, new Handle());
     }
 
     /**
@@ -76,13 +77,10 @@ public abstract class LivingEnemy implements Enemy {
      * Holds reference to this.
      */
     public final class Handle implements EnemyHandle {
+        private BukkitTask task;
+
         public JavaPlugin getPlugin() {
             return context.getPlugin();
-        }
-
-        @Override
-        public boolean shouldSave() {
-            return false;
         }
 
         @Override
@@ -92,11 +90,6 @@ public abstract class LivingEnemy implements Enemy {
 
         public LivingEnemy getLivingEnemy() {
             return LivingEnemy.this;
-        }
-
-        @Override
-        public void onTick(MarkTagContainer container) {
-            tick();
         }
 
         @Override
@@ -140,6 +133,16 @@ public abstract class LivingEnemy implements Enemy {
         @Override
         public void onRandomEvent(Event event) {
             LivingEnemy.this.onRandomEvent(event);
+        }
+
+        @Override
+        public void onEnable() {
+            task = Bukkit.getScheduler().runTaskTimer(context.getPlugin(), LivingEnemy.this::tick, 0L, 1L);
+        }
+
+        @Override
+        public void onDisable() {
+            task.cancel();
         }
     }
 
