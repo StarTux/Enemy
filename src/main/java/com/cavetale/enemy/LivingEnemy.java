@@ -46,7 +46,9 @@ public abstract class LivingEnemy implements Enemy {
 
     public final void markLiving() {
         EntityMarker.setId(living, WORLD_MARKER_ID);
-        EnemyPlugin.setHandle(living, new Handle());
+        Handle handle = new Handle();
+        EnemyPlugin.setHandle(living, handle);
+        handle.onEnable();
     }
 
     /**
