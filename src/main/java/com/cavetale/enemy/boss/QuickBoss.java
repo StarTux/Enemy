@@ -10,12 +10,10 @@ import com.cavetale.enemy.ability.PushAbility;
 import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.util.Prep;
 import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
-import java.util.Arrays;
 import java.util.List;
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Bee;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -24,7 +22,6 @@ import org.bukkit.entity.Mob;
 import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -134,11 +131,6 @@ public final class QuickBoss extends LivingEnemy {
     private void prepAdd(Entity entity) {
         LivingEntity living = (LivingEntity) entity;
         Prep.disableEquipmentDrop(living);
-    }
-
-    @Override
-    public List<ItemStack> getDrops() {
-        return Arrays.asList(new ItemStack(Material.DIAMOND));
     }
 
     @Override

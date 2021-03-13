@@ -10,16 +10,12 @@ import com.cavetale.enemy.ability.PauseAbility;
 import com.cavetale.enemy.ability.PushAbility;
 import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.util.Prep;
-import java.util.Arrays;
-import java.util.List;
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Wither;
-import org.bukkit.inventory.ItemStack;
 
 public final class VengefulBoss extends LivingEnemy {
     @Getter private double maxHealth = 500;
@@ -83,10 +79,5 @@ public final class VengefulBoss extends LivingEnemy {
         Prep.attr(ghast, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0);
         Prep.attr(ghast, Attribute.GENERIC_ARMOR, 20.0); // dia=20
         Prep.attr(ghast, Attribute.GENERIC_ARMOR_TOUGHNESS, 8.0); // dia=8
-    }
-
-    @Override
-    public List<ItemStack> getDrops() {
-        return Arrays.asList(new ItemStack(Material.NETHER_STAR));
     }
 }

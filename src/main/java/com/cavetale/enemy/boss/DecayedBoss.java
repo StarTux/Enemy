@@ -9,8 +9,6 @@ import com.cavetale.enemy.ability.PauseAbility;
 import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.util.ItemBuilder;
 import com.cavetale.enemy.util.Prep;
-import java.util.Arrays;
-import java.util.List;
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
@@ -19,7 +17,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.ItemStack;
 
 public final class DecayedBoss extends LivingEnemy {
     @Getter private double maxHealth = 500;
@@ -78,10 +75,5 @@ public final class DecayedBoss extends LivingEnemy {
         Prep.disableEquipmentDrop(witherSkeleton);
         witherSkeleton.setPersistent(false);
         witherSkeleton.setRemoveWhenFarAway(true);
-    }
-
-    @Override
-    public List<ItemStack> getDrops() {
-        return Arrays.asList(new ItemStack(Material.WITHER_SKELETON_SKULL));
     }
 }
