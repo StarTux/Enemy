@@ -36,7 +36,11 @@ public enum EnemyType {
     // Bosses
     SADISTIC_VAMPIRE(SadisticVampireBoss.class, SadisticVampireBoss::new),
     WICKED_CRONE(WickedCroneBoss.class, WickedCroneBoss::new),
-    INFERNAL_PHANTASM(InfernalPhantasmBoss.class, InfernalPhantasmBoss::new);
+    INFERNAL_PHANTASM(InfernalPhantasmBoss.class, InfernalPhantasmBoss::new),
+    // 2021
+    ENDER_DRAGON(QuickBoss.class, ctx -> new QuickBoss(ctx, "Ender Dragon", EntityType.ENDER_DRAGON, EntityType.BLAZE)),
+    ;
+    //
 
     public final Class<? extends Enemy> type;
     private final Function<Context, Enemy> ctor;
