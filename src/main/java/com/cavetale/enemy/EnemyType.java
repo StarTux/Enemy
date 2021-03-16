@@ -38,8 +38,8 @@ public enum EnemyType {
     WICKED_CRONE(WickedCroneBoss.class, WickedCroneBoss::new),
     INFERNAL_PHANTASM(InfernalPhantasmBoss.class, InfernalPhantasmBoss::new),
     // 2021
-    ENDER_DRAGON(QuickBoss.class, ctx -> new QuickBoss(ctx, "Ender Dragon", EntityType.ENDER_DRAGON, EntityType.BLAZE)),
-    GHAST_BOSS(QuickBoss.class, ctx -> new QuickBoss(ctx, "GHAST", EntityType.GHAST, EntityType.BLAZE)),
+    ENDER_DRAGON_BOSS(QuickBoss.class, ctx -> new QuickBoss(ctx, "Ender Dragon", EntityType.ENDER_DRAGON, EntityType.BLAZE)),
+    GHAST_BOSS(QuickBoss.class, ctx -> new QuickBoss(ctx, "Ghast", EntityType.GHAST, EntityType.BLAZE)),
     ;
     //
 

@@ -16,6 +16,7 @@ import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Bee;
+import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -70,6 +71,9 @@ public final class QuickBoss extends LivingEnemy {
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 0, true, false, true));
             arrowStorm.setDuration(200);
             arrowStorm.setInterval(10);
+        }
+        if (living instanceof EnderDragon) {
+            ((EnderDragon) living).setPhase(EnderDragon.Phase.CHARGE_PLAYER);
         }
         phases.begin();
     }
