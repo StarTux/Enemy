@@ -11,6 +11,7 @@ import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.util.Prep;
 import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
 import java.util.List;
+import java.util.Objects;
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
@@ -21,7 +22,9 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.SizedFireball;
 import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -80,6 +83,7 @@ public final class QuickBoss extends LivingEnemy {
 
     @Override
     public void tick() {
+        if (living == null || !living.isValid()) return;
         phases.tick();
         health = living.getHealth();
         if (living instanceof Mob) {
@@ -139,5 +143,16 @@ public final class QuickBoss extends LivingEnemy {
             ((WitchConsumePotionEvent) event).setCancelled(true);
             return;
         }
+    }
+
+    @Override
+    public void onDamageByEntity(EntityDamageByEntityEvent event) {
+        // Protect the ghast boss from its own projectiles
+        // When deflected by player, they will appear as shooter!
+        if (bossType == EntityType.GHAST && event.getDamager() instanceof SizedFireball) {
+            event.setCancelled(true);
+            return;
+        }
+        super.onDamageByEntity(event);
     }
 }
