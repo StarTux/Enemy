@@ -4,7 +4,9 @@ import com.cavetale.enemy.Context;
 import com.cavetale.enemy.Enemy;
 import java.util.ArrayList;
 import java.util.List;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
 public final class DialogueAbility extends AbstractAbility {
@@ -30,12 +32,16 @@ public final class DialogueAbility extends AbstractAbility {
         if (ticks != warmup) return true;
         if (dialogues.isEmpty()) return true;
         String line = dialogues.get(dialogueIndex);
-        String message = "" + ChatColor.GRAY + ": " + ChatColor.RED + ChatColor.ITALIC + line;
+        Component message = Component.text()
+            .append(enemy.getDisplayName())
+            .append(Component.text(": ", NamedTextColor.GRAY))
+            .append(Component.text(line, NamedTextColor.RED, TextDecoration.ITALIC))
+            .build();
         dialogueIndex += 1;
         if (dialogueIndex >= dialogues.size()) dialogueIndex = 0;
         for (Player player : context.getPlayers()) {
-            player.sendMessage(enemy.getDisplayName() + message);
-            player.sendActionBar(enemy.getDisplayName() + message);
+            player.sendMessage(message);
+            player.sendActionBar(message);
         }
         return true;
     }

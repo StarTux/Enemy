@@ -10,7 +10,9 @@ import com.cavetale.enemy.ability.PauseAbility;
 import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.util.Prep;
 import lombok.Getter;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.entity.Blaze;
 import org.bukkit.entity.PiglinBrute;
@@ -19,7 +21,7 @@ import org.bukkit.entity.Zoglin;
 public final class InfernalPhantasmBoss extends LivingEnemy {
     @Getter private double maxHealth = 500;
     @Getter private double health = 500;
-    @Getter private final String displayName = "" + ChatColor.DARK_RED + ChatColor.BOLD + "Infernal Phantasm";
+    @Getter private final Component displayName = Component.text("Infernal Phantasm", NamedTextColor.DARK_RED, TextDecoration.BOLD);
     AbilityPhases phases;
 
     public InfernalPhantasmBoss(final Context context) {
@@ -55,7 +57,7 @@ public final class InfernalPhantasmBoss extends LivingEnemy {
     }
 
     private void prep(Blaze blaze) {
-        blaze.setCustomName(displayName);
+        blaze.customName(displayName);
         blaze.setCustomNameVisible(true);
         Prep.health(blaze, health, maxHealth);
         Prep.boss(blaze);

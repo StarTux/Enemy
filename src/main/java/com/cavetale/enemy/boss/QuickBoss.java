@@ -11,9 +11,10 @@ import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.util.Prep;
 import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
 import java.util.List;
-import java.util.Objects;
 import lombok.Getter;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.entity.Bee;
 import org.bukkit.entity.EnderDragon;
@@ -32,7 +33,7 @@ import org.bukkit.potion.PotionEffectType;
 public final class QuickBoss extends LivingEnemy {
     @Getter private double maxHealth = 500;
     @Getter private double health = 500;
-    @Getter private final String displayName;
+    @Getter private final Component displayName;
     private AbilityPhases phases;
     private final EntityType bossType;
     private final EntityType addType;
@@ -40,7 +41,7 @@ public final class QuickBoss extends LivingEnemy {
     public QuickBoss(final Context context, final String displayName,
                      final EntityType bossType, final EntityType addType) {
         super(context);
-        this.displayName = "" + ChatColor.RED + ChatColor.BOLD + displayName;
+        this.displayName = Component.text(displayName, NamedTextColor.RED, TextDecoration.BOLD);
         this.bossType = bossType;
         this.addType = addType;
     }
@@ -112,7 +113,7 @@ public final class QuickBoss extends LivingEnemy {
         final double maxVisible = 32 * 32;
         final double maxBlind = 16 * 16;
         for (Player player : players) {
-            if (!player.isOnGround()) continue;
+            if (!((LivingEntity) player).isOnGround()) continue;
             double dist = player.getEyeLocation().distanceSquared(eye);
             if (living == null || living.hasLineOfSight(player)) {
                 if (dist < minVisible && dist < maxVisible) {
@@ -131,7 +132,7 @@ public final class QuickBoss extends LivingEnemy {
 
     private void prep(Entity entity) {
         LivingEntity living = (LivingEntity) entity;
-        living.setCustomName(displayName);
+        living.customName(displayName);
         Prep.health(living, health, maxHealth);
         Prep.boss(living);
     }

@@ -11,7 +11,9 @@ import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.ability.SplashPotionAbility;
 import com.cavetale.enemy.util.Prep;
 import lombok.Getter;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.entity.Evoker;
 import org.bukkit.entity.Vex;
@@ -20,7 +22,7 @@ import org.bukkit.inventory.EntityEquipment;
 public final class ForgottenBoss extends LivingEnemy {
     @Getter private double maxHealth = 500;
     @Getter private double health = 500;
-    @Getter private final String displayName = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "The Forgotten";
+    @Getter private final Component displayName = Component.text("The Forgotten", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD);
     AbilityPhases phases = new AbilityPhases();
 
     public ForgottenBoss(final Context context) {
@@ -69,7 +71,7 @@ public final class ForgottenBoss extends LivingEnemy {
 
     private void prep(Evoker entity) {
         Prep.health(entity, health, maxHealth);
-        entity.setCustomName(displayName);
+        entity.customName(displayName);
         Prep.boss(entity);
     }
 

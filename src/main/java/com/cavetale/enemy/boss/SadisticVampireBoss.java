@@ -13,7 +13,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -27,7 +29,7 @@ import org.bukkit.util.Vector;
 public final class SadisticVampireBoss extends LivingEnemy {
     @Getter private double maxHealth = 500;
     @Getter private double health = 500;
-    @Getter private final String displayName = "" + ChatColor.DARK_RED + ChatColor.BOLD + "Sadistic Vampire";
+    @Getter private final Component displayName = Component.text("Sadistic Vampire", NamedTextColor.DARK_RED, TextDecoration.BOLD);
     AbilityPhases batPhases;
     AbilityPhases evokerPhases;
     Phase phase = Phase.BAT;
@@ -255,7 +257,7 @@ public final class SadisticVampireBoss extends LivingEnemy {
     }
 
     private void prep(Mob mob) {
-        mob.setCustomName(displayName);
+        mob.customName(displayName);
         mob.setCustomNameVisible(true);
         Prep.health(mob, health, maxHealth);
         Prep.boss(mob);

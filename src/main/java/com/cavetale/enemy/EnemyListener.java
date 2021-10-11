@@ -67,8 +67,8 @@ public final class EnemyListener implements Listener {
             }
         } else if (EntityMarker.hasId(event.getDamager(), FireworkAbility.FIREWORK_ID)) {
             if (event.getEntity() instanceof Player) {
-                double base = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
-                event.setDamage(EntityDamageEvent.DamageModifier.BASE, base * 1.25);
+                double base = event.getFinalDamage();
+                event.setDamage(base * 1.25);
             } else {
                 event.setCancelled(true);
             }

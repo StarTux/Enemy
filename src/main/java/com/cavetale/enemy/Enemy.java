@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -55,7 +56,7 @@ public interface Enemy {
 
     boolean hasLineOfSight(Entity other);
 
-    String getDisplayName();
+    Component getDisplayName();
 
     <T extends Projectile> T launchProjectile(Class<T> projectile, Vector velocity);
 

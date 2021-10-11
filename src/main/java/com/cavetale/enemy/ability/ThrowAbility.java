@@ -42,7 +42,7 @@ public final class ThrowAbility extends AbstractAbility {
         final double maxBlind = 16 * 16;
         LivingEntity living = enemy.getLivingEntity();
         for (Player player : players) {
-            if (!player.isOnGround()) continue;
+            if (!((LivingEntity) player).isOnGround()) continue;
             double dist = player.getEyeLocation().distanceSquared(eye);
             if (living == null || living.hasLineOfSight(player)) {
                 if (dist < minVisible && dist < maxVisible) {

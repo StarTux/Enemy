@@ -11,7 +11,9 @@ import com.cavetale.enemy.ability.SplashPotionAbility;
 import com.cavetale.enemy.util.ItemBuilder;
 import com.cavetale.enemy.util.Prep;
 import lombok.Getter;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.MagmaCube;
@@ -23,7 +25,7 @@ import org.bukkit.potion.PotionType;
 public final class WickedCroneBoss extends LivingEnemy {
     @Getter private double maxHealth = 500;
     @Getter private double health = 500;
-    @Getter private final String displayName = "" + ChatColor.DARK_RED + ChatColor.BOLD + "Wicked Crone";
+    @Getter private final Component displayName = Component.text("Wicked Crone", NamedTextColor.DARK_RED, TextDecoration.BOLD);
     AbilityPhases phases;
 
     public WickedCroneBoss(final Context context) {
@@ -67,7 +69,7 @@ public final class WickedCroneBoss extends LivingEnemy {
     }
 
     private void prep(Witch witch) {
-        witch.setCustomName(displayName);
+        witch.customName(displayName);
         witch.setCustomNameVisible(true);
         witch.setPersistent(false);
         Prep.health(witch, health, maxHealth);

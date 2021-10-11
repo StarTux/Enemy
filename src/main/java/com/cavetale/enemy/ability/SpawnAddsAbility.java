@@ -20,7 +20,7 @@ public final class SpawnAddsAbility extends AbstractAbility {
     @Getter @Setter private int interval = 20;
     @Getter @Setter private int simultaneous = 1;
     private int intervalTicks = 0;
-    private List<Add> adds = new ArrayList<>();
+    private List<Add<? extends Entity>> adds = new ArrayList<>();
 
     public SpawnAddsAbility(final Enemy enemy, final Context context) {
         super(enemy, context);
@@ -35,8 +35,8 @@ public final class SpawnAddsAbility extends AbstractAbility {
         private final Consumer<T> callback;
     }
 
-    public <T> void add(Class<T> type, int maximum, int simul, Consumer<T> callback) {
-        adds.add(new Add(type, maximum, simul, callback));
+    public <T extends Entity> void add(Class<T> type, int maximum, int simul, Consumer<T> callback) {
+        adds.add(new Add<T>(type, maximum, simul, callback));
     }
 
     @Override
@@ -58,14 +58,14 @@ public final class SpawnAddsAbility extends AbstractAbility {
         // Spawner block particle animation
         enemy.getWorld().spawnParticle(Particle.FLAME, enemy.getEyeLocation(), 8, 0.5, 0.5, 0.5, 0.0);
         int spawned = 0;
-        for (Add add : adds) {
+        for (Add<? extends Entity> add : adds) {
             spawned += spawnAdd(add);
             if (spawned >= simultaneous) break;
         }
         return true;
     }
 
-    int spawnAdd(Add add) {
+    protected <T extends Entity> int spawnAdd(Add<T> add) {
         int count = context.countTemporaryEntities(add.type);
         int spawned = 0;
         while (count < add.maximum && spawned < add.simultaneous) {

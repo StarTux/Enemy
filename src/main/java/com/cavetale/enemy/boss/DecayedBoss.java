@@ -10,7 +10,9 @@ import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.util.ItemBuilder;
 import com.cavetale.enemy.util.Prep;
 import lombok.Getter;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -21,7 +23,7 @@ import org.bukkit.inventory.EntityEquipment;
 public final class DecayedBoss extends LivingEnemy {
     @Getter private double maxHealth = 500;
     @Getter private double health = 500;
-    @Getter private final String displayName = "" + ChatColor.DARK_RED + ChatColor.BOLD + "The Decayed";
+    @Getter private final Component displayName = Component.text("The Decayed", NamedTextColor.DARK_RED, TextDecoration.BOLD);
     private AbilityPhases phases;
 
     public DecayedBoss(final Context context) {
@@ -66,7 +68,7 @@ public final class DecayedBoss extends LivingEnemy {
                              .ench(Enchantment.KNOCKBACK, 2)
                              .ench(Enchantment.DAMAGE_ALL, 5)
                              .removeDamage().create());
-        entity.setCustomName(displayName);
+        entity.customName(displayName);
         Prep.health(entity, health, maxHealth);
         Prep.boss(entity);
     }

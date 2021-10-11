@@ -11,7 +11,9 @@ import com.cavetale.enemy.ability.PushAbility;
 import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.util.Prep;
 import lombok.Getter;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Ghast;
@@ -20,7 +22,7 @@ import org.bukkit.entity.Wither;
 public final class VengefulBoss extends LivingEnemy {
     @Getter private double maxHealth = 500;
     @Getter private double health = 500;
-    @Getter private final String displayName = "" + ChatColor.DARK_GRAY + ChatColor.BOLD + "The Vengeful";
+    @Getter private final Component displayName = Component.text("The Vengeful", NamedTextColor.DARK_GRAY, TextDecoration.BOLD);
     AbilityPhases phases = new AbilityPhases();
 
     public VengefulBoss(final Context context) {
@@ -68,7 +70,7 @@ public final class VengefulBoss extends LivingEnemy {
 
     private void prep(Wither wither) {
         Prep.health(wither, health, maxHealth);
-        wither.setCustomName(displayName);
+        wither.customName(displayName);
         Prep.boss(wither);
         wither.getBossBar().setVisible(false);
     }

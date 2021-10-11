@@ -34,7 +34,7 @@ public final class LevitateAbility extends AbstractAbility {
         //
         PotionEffect effect = new PotionEffect(PotionEffectType.LEVITATION, 200, 0);
         for (Player player : context.getPlayers()) {
-            player.addPotionEffect(effect, false);
+            player.addPotionEffect(effect);
         }
         return true;
     }

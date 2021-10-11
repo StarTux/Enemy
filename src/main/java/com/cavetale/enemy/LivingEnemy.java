@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -213,9 +214,9 @@ public abstract class LivingEnemy implements Enemy {
      * Passthrough.
      */
     @Override
-    public String getDisplayName() {
-        if (living == null) return "";
-        return living.getCustomName();
+    public Component getDisplayName() {
+        if (living == null) return Component.empty();
+        return living.customName();
     }
 
     /**
