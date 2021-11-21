@@ -62,7 +62,7 @@ public final class VengefulBoss extends LivingEnemy {
     }
 
     @Override
-    public void onRemove() {
+    public void cleanUp() {
         if (phases != null) {
             phases.end();
         }

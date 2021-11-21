@@ -1,6 +1,7 @@
 package com.cavetale.enemy;
 
 import com.destroystokyo.paper.event.entity.EntityPathfindEvent;
+import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -10,6 +11,10 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 
+/**
+ * An EnemyHandle connects one or several Bukkit Entities with and
+ * Enemy instance.  The map is managed by EnemyPlugin.
+ */
 public interface EnemyHandle {
     Enemy getEnemy();
 
@@ -36,4 +41,8 @@ public interface EnemyHandle {
     void onEnable();
 
     void onDisable();
+
+    default void onRemoveFromWorld(EntityRemoveFromWorldEvent event) {
+        onDisable();
+    }
 }

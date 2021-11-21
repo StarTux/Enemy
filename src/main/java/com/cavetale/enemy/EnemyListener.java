@@ -136,6 +136,6 @@ public final class EnemyListener implements Listener {
     void onEntityRemoveFromWorld(EntityRemoveFromWorldEvent event) {
         EnemyHandle handle = EnemyPlugin.removeHandle(event.getEntity());
         if (handle == null) return;
-        handle.onDisable();
+        handle.onRemoveFromWorld(event);
     }
 }

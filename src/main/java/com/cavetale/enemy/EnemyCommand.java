@@ -1,26 +1,25 @@
 package com.cavetale.enemy;
 
-import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.bukkit.command.Command;
+import com.cavetale.core.command.AbstractCommand;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
 
-@RequiredArgsConstructor
-public final class EnemyCommand implements TabExecutor {
-    private final EnemyPlugin plugin;
-
-    public void enable() {
-        plugin.getCommand("enemy").setExecutor(this);
+public final class EnemyCommand extends AbstractCommand<EnemyPlugin> {
+    protected EnemyCommand(final EnemyPlugin plugin) {
+        super(plugin, "enemy");
     }
 
-    @Override
-    public boolean onCommand(final CommandSender sender, final Command command, final String alias, final String[] args) {
+    protected void onEnable() {
+        rootNode.addChild("list").denyTabCompletion()
+            .description("List spawned enemies")
+            .senderCaller(this::list);
+    }
+
+    boolean list(CommandSender sender, String[] args) {
+        if (args.length != 0) return false;
+        for (Enemy enemy : Enemy.ID_MAP.values()) {
+            sender.sendMessage("[" + enemy.getEnemyId() + "] " + enemy.getInfo());
+        }
+        sender.sendMessage("Total " + Enemy.ID_MAP.size());
         return true;
-    }
-
-    @Override
-    public List<String> onTabComplete(final CommandSender sender, final Command command, final String alias, final String[] args) {
-        return null;
     }
 }

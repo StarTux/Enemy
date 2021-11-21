@@ -2,10 +2,13 @@ package com.cavetale.enemy;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -24,79 +27,101 @@ import org.bukkit.util.Vector;
  * vice versa. It could be a wrapper for a literal bukkit Entity, a
  * collection of entities, or entirely virtual.
  */
-public interface Enemy {
-    String WORLD_MARKER_ID = "raid:enemy";
+public abstract class Enemy {
+    public static final String WORLD_MARKER_ID = "raid:enemy";
+    private static int nextEnemyId = 1;
+    protected static final Map<Integer, Enemy> ID_MAP = new HashMap<>();
+    @Getter protected final int enemyId;
 
-    Context getContext();
+    protected Enemy() {
+        this.enemyId = nextEnemyId++;
+        ID_MAP.put(enemyId, this);
+    }
 
-    void spawn(Location location);
+    public static Enemy ofEnemyId(int theEnemyId) {
+        return ID_MAP.get(theEnemyId);
+    }
 
-    default void spawn() {
+    public abstract Context getContext();
+
+    public abstract void spawn(Location location);
+
+    /**
+     * Spawn at the default spawn location.
+     */
+    public void spawn() {
         spawn(getSpawnLocation());
     }
 
-    default Location getSpawnLocation() {
+    /**
+     * The default spawn location for this enemy.
+     */
+    public Location getSpawnLocation() {
         return getContext().getSpawnLocation();
     }
 
-    void setSpawnLocation(Location location);
-
-    void remove();
+    public abstract void setSpawnLocation(Location location);
 
     /**
-     * Called when the enemy is purposely removed from the world.
+     * Overriders must call super!
      */
-    void onRemove();
-
-    World getWorld();
-
-    Location getLocation();
-
-    Location getEyeLocation();
-
-    boolean hasLineOfSight(Entity other);
-
-    Component getDisplayName();
-
-    <T extends Projectile> T launchProjectile(Class<T> projectile, Vector velocity);
-
-    void setInvulnerable(boolean invulnerable);
-
-    void setImmobile(boolean immobile);
-
-    boolean isInvulnerable();
-
-    /**
-     * May return null.
-     */
-    LivingEntity getLivingEntity();
-
-    /**
-     * May return null.
-     */
-    Mob getMob();
-
-    void teleport(Location to);
-
-    BoundingBox getBoundingBox();
-
-    Collection<UUID> getDamagers();
-
-    boolean isValid();
-
-    boolean isAlive();
-
-    default boolean isDead() {
-        return !isAlive();
+    public final void remove() {
+        onRemove();
+        ID_MAP.remove(this.enemyId);
     }
 
-    double getHealth();
+    protected abstract void onRemove();
 
-    void setHealth(double h);
+    public abstract World getWorld();
 
-    double getMaxHealth();
+    public abstract Location getLocation();
 
-    default List<Player> getPlayerDamagers() {
+    public abstract Location getEyeLocation();
+
+    public abstract boolean hasLineOfSight(Entity other);
+
+    public abstract Component getDisplayName();
+
+    public abstract <T extends Projectile> T launchProjectile(Class<T> projectile, Vector velocity);
+
+    public abstract void setInvulnerable(boolean invulnerable);
+
+    public abstract void setImmobile(boolean immobile);
+
+    public abstract boolean isInvulnerable();
+
+    /**
+     * May return null.
+     */
+    public abstract LivingEntity getLivingEntity();
+
+    /**
+     * May return null.
+     */
+    public abstract Mob getMob();
+
+    public abstract void teleport(Location to);
+
+    public abstract BoundingBox getBoundingBox();
+
+    public abstract Collection<UUID> getDamagers();
+
+    public abstract boolean isValid();
+
+    public abstract boolean isAlive();
+
+    public abstract boolean isDead();
+
+    public abstract double getHealth();
+
+    public abstract void setHealth(double h);
+
+    public abstract double getMaxHealth();
+
+    /**
+     * Get all damagers who are currently online.
+     */
+    public List<Player> getPlayerDamagers() {
         return getDamagers().stream()
             .map(Bukkit::getPlayer)
             .filter(Objects::nonNull)
@@ -106,7 +131,7 @@ public interface Enemy {
     /**
      * Get the Enemy that belongs to this entity, or null if none is found.
      */
-    static Enemy of(Entity entity) {
+    public static Enemy of(Entity entity) {
         EnemyHandle handle = EnemyPlugin.getHandle(entity);
         if (handle == null) return null;
         return handle.getEnemy();
@@ -115,7 +140,20 @@ public interface Enemy {
     /**
      * Customize drops if desired.
      */
-    default List<ItemStack> getDrops() {
+    public List<ItemStack> getDrops() {
         return Collections.emptyList();
+    }
+
+    /**
+     * Print some basic info used in commands.
+     */
+    public String getInfo() {
+        Location loc = getLocation();
+        return getClass().getSimpleName()
+            + ":" + loc.getWorld().getName()
+            + ":" + loc.getBlockX()
+            + "," + loc.getBlockY()
+            + "," + loc.getBlockZ()
+            + (isDead() ? "(dead)" : "");
     }
 }

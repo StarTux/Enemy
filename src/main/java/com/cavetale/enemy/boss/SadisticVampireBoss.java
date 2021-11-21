@@ -243,7 +243,7 @@ public final class SadisticVampireBoss extends LivingEnemy {
     }
 
     @Override
-    public void onRemove() {
+    public void cleanUp() {
         if (bat != null) {
             bat.remove();
             bat = null;

@@ -63,7 +63,7 @@ public final class ForgottenBoss extends LivingEnemy {
     }
 
     @Override
-    public void onRemove() {
+    public void cleanUp() {
         if (phases != null) {
             phases.end();
         }

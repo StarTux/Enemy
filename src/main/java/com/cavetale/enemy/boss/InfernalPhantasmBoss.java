@@ -76,7 +76,7 @@ public final class InfernalPhantasmBoss extends LivingEnemy {
     }
 
     @Override
-    public void onRemove() {
+    public void cleanUp() {
         if (phases != null) {
             phases.end();
         }

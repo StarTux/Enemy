@@ -33,7 +33,7 @@ public final class VampireBat extends LivingEnemy {
     }
 
     @Override
-    public void onRemove() {
+    public void cleanUp() {
         vampirism.end();
     }
 

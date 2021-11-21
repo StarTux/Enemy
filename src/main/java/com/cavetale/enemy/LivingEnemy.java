@@ -29,9 +29,9 @@ import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 /**
- * An enemy wrapping a LivingEntity.
+ * An enemy wrapping one single LivingEntity.
  */
-public abstract class LivingEnemy implements Enemy {
+public abstract class LivingEnemy extends Enemy {
     @Getter protected final Context context;
     protected LivingEntity living;
     private double backupSpeed;
@@ -66,14 +66,17 @@ public abstract class LivingEnemy implements Enemy {
     public abstract void tick();
 
     /**
-     * Passthrough.
+     * Clean up.
      */
     @Override
-    public void remove() {
+    protected final void onRemove() {
         if (living == null) return;
-        living.remove();
+        if (!living.isDead()) living.remove();
         living = null;
+        cleanUp();
     }
+
+    protected abstract void cleanUp();
 
     /**
      * Stored with the LivingEntity.
@@ -251,7 +254,7 @@ public abstract class LivingEnemy implements Enemy {
      */
     @Override
     public boolean isValid() {
-        return living != null && living.isValid();
+        return living != null && !living.isDead();
     }
 
     /**
@@ -327,6 +330,7 @@ public abstract class LivingEnemy implements Enemy {
      */
     protected void onDeath() {
         dead = true;
+        remove();
     }
 
     /**
@@ -364,4 +368,18 @@ public abstract class LivingEnemy implements Enemy {
     protected void onSpellCast(EntitySpellCastEvent event) { }
 
     protected void onRandomEvent(Event event) { }
+
+    /**
+     * Print some basic info.
+     */
+    @Override
+    public String getInfo() {
+        Location loc = getLocation();
+        return (living != null ? living.getType().name() : getClass().getSimpleName())
+            + ":" + loc.getWorld().getName()
+            + ":" + loc.getBlockX()
+            + "," + loc.getBlockY()
+            + "," + loc.getBlockZ()
+            + (isDead() ? "(dead)" : "");
+    }
 }

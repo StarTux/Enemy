@@ -36,7 +36,7 @@ public final class HealEvoker extends LivingEnemy {
     }
 
     @Override
-    public void onRemove() {
+    public void cleanUp() {
         healAbility.end();
     }
 

@@ -1,6 +1,7 @@
 package com.cavetale.enemy;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 import org.bukkit.entity.Entity;
@@ -21,6 +22,10 @@ public final class EnemyPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        for (Enemy enemy : List.copyOf(Enemy.ID_MAP.values())) {
+            enemy.remove();
+        }
+        Enemy.ID_MAP.clear();
     }
 
     public static void setHandle(Entity entity, EnemyHandle handle) {

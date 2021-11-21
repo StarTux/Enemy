@@ -49,7 +49,7 @@ public final class DecayedBoss extends LivingEnemy {
     }
 
     @Override
-    public void onRemove() {
+    public void cleanUp() {
         if (phases != null) {
             phases.end();
         }
