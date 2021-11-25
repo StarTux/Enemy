@@ -1,8 +1,6 @@
 package com.cavetale.enemy;
 
 import java.util.List;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,15 +19,6 @@ public interface Context {
      * not.
      */
     List<Player> getPlayers();
-
-    World getWorld();
-
-    /**
-     * The spawn of the current battle, or the desired spawn location
-     * for the enemy receiving this context.
-     * NOT the world spawn.
-     */
-    Location getSpawnLocation();
 
     /**
      * Register a new enemy. Presumably it was spawned by the boss as

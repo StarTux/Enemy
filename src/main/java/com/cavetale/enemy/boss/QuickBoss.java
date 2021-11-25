@@ -10,7 +10,6 @@ import com.cavetale.enemy.ability.PushAbility;
 import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.util.Prep;
 import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
-import java.util.List;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -94,40 +93,12 @@ public final class QuickBoss extends LivingEnemy {
         if (living instanceof Mob) {
             Mob mob = (Mob) living;
             if (!(mob.getTarget() instanceof Player)) {
-                Player target = findTarget();
-                if (target != null) mob.setTarget(target);
+                findPlayerTarget();
             }
         }
         if (living instanceof Bee) {
             ((Bee) living).setHasStung(false);
         }
-    }
-
-    private Player findTarget() {
-        List<Player> players = context.getPlayers();
-        Location eye = getEyeLocation();
-        double minVisible = Double.MAX_VALUE;
-        double minBlind = Double.MAX_VALUE;
-        Player visible = null;
-        Player blind = null;
-        final double maxVisible = 32 * 32;
-        final double maxBlind = 16 * 16;
-        for (Player player : players) {
-            if (!((LivingEntity) player).isOnGround()) continue;
-            double dist = player.getEyeLocation().distanceSquared(eye);
-            if (living == null || living.hasLineOfSight(player)) {
-                if (dist < minVisible && dist < maxVisible) {
-                    visible = player;
-                    minVisible = dist;
-                }
-            } else {
-                if (dist < minBlind && dist < maxBlind) {
-                    blind = player;
-                    minBlind = dist;
-                }
-            }
-        }
-        return visible != null ? visible : null;
     }
 
     private void prep(Entity entity) {

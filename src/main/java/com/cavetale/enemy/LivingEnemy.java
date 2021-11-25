@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
-import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -37,7 +36,6 @@ public abstract class LivingEnemy extends Enemy {
     private boolean invulnerable;
     @Getter private boolean dead = false; // overrides
     @Getter private final Set<UUID> damagers = new HashSet<>();
-    @Setter protected Location spawnLocation;
 
     public LivingEnemy(final Context context) {
         super(context);
@@ -48,14 +46,6 @@ public abstract class LivingEnemy extends Enemy {
         Handle handle = new Handle();
         EnemyPlugin.setHandle(living, handle);
         handle.onEnable();
-    }
-
-    /**
-     * The location where this enemy should spawn or respawn, or go home.
-     */
-    @Override
-    public Location getSpawnLocation() {
-        return spawnLocation != null ? spawnLocation : context.getSpawnLocation();
     }
 
     /**
@@ -176,8 +166,7 @@ public abstract class LivingEnemy extends Enemy {
      */
     @Override
     public World getWorld() {
-        if (living == null) return context.getWorld();
-        return living.getWorld();
+        return living != null ? living.getWorld() : null;
     }
 
     /**
@@ -185,8 +174,7 @@ public abstract class LivingEnemy extends Enemy {
      */
     @Override
     public Location getLocation() {
-        if (living == null) return getSpawnLocation();
-        return living.getLocation();
+        return living != null ? living.getLocation() : null;
     }
 
     /**
@@ -194,8 +182,7 @@ public abstract class LivingEnemy extends Enemy {
      */
     @Override
     public Location getEyeLocation() {
-        if (living == null) return getSpawnLocation();
-        return living.getEyeLocation();
+        return living != null ? living.getEyeLocation() : null;
     }
 
     /**
@@ -203,8 +190,7 @@ public abstract class LivingEnemy extends Enemy {
      */
     @Override
     public boolean hasLineOfSight(Entity other) {
-        if (living == null) return false;
-        return living.hasLineOfSight(other);
+        return living != null ? living.hasLineOfSight(other) : false;
     }
 
     /**
@@ -212,8 +198,7 @@ public abstract class LivingEnemy extends Enemy {
      */
     @Override
     public Component getDisplayName() {
-        if (living == null) return Component.empty();
-        return living.customName();
+        return living != null ? living.customName() : Component.empty();
     }
 
     /**
@@ -221,8 +206,7 @@ public abstract class LivingEnemy extends Enemy {
      */
     @Override
     public double getHealth() {
-        if (living == null) return 0;
-        return living.getHealth();
+        return living != null ? living.getHealth() : 0;
     }
 
     /**
@@ -239,8 +223,28 @@ public abstract class LivingEnemy extends Enemy {
      */
     @Override
     public double getMaxHealth() {
-        if (living == null) return 0;
-        return living.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+        return living != null
+            ? living.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()
+            : 0;
+    }
+
+    /**
+     * Just call Mob#setTarget.
+     */
+    @Override
+    public void setTarget(LivingEntity target) {
+        if (!(living instanceof Mob)) return;
+        ((Mob) living).setTarget(target);
+    }
+
+    /**
+     * Just fetch Mob#getTarget.
+     */
+    @Override
+    public LivingEntity getCurrentTarget() {
+        return living instanceof Mob
+            ? ((Mob) living).getTarget()
+            : null;
     }
 
     /**
@@ -264,8 +268,9 @@ public abstract class LivingEnemy extends Enemy {
      */
     @Override
     public <T extends Projectile> T launchProjectile(Class<T> projectile, Vector velocity) {
-        if (living == null) return null;
-        return living.launchProjectile(projectile, velocity);
+        return living != null
+            ? living.launchProjectile(projectile, velocity)
+            : null;
     }
 
     /**
@@ -314,8 +319,7 @@ public abstract class LivingEnemy extends Enemy {
      */
     @Override
     public BoundingBox getBoundingBox() {
-        if (living == null) return null;
-        return living.getBoundingBox();
+        return living != null ? living.getBoundingBox() : null;
     }
 
     /**
@@ -330,8 +334,7 @@ public abstract class LivingEnemy extends Enemy {
     /**
      * Something.
      */
-    public void onDamage(EntityDamageEvent event) {
-    }
+    public void onDamage(EntityDamageEvent event) { }
 
     /**
      * Keep tabs on enemies.

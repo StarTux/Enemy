@@ -36,7 +36,8 @@ public final class WarpAbility extends AbstractAbility {
     @Override
     public boolean onTick(int ticks) {
         if (done) return true;
-        Location center = context.getSpawnLocation();
+        Location center = enemy.getSpawnLocation();
+        if (center == null) return false;
         Location loc = enemy.getLocation();
         if (center.distanceSquared(loc) > maxDistance * maxDistance) {
             done = true;

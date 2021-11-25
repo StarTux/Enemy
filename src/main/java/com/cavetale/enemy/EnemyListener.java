@@ -143,7 +143,7 @@ public final class EnemyListener implements Listener {
     void onPluginDisable(PluginDisableEvent event) {
         for (Enemy enemy : Enemy.ID_MAP.values()) {
             if (enemy.getContext().getPlugin() == event.getPlugin()) {
-                enemy.setContext(DefaultContext.INSTANCE);
+                enemy.resetContext();
             }
         }
     }

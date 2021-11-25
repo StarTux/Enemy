@@ -35,6 +35,7 @@ public abstract class Enemy {
     protected static final Map<Integer, Enemy> ID_MAP = new HashMap<>();
     @Getter protected final int enemyId;
     @Getter @Setter protected Context context;
+    @Getter @Setter protected Location spawnLocation;
     private boolean removed;
 
     protected Enemy(@NonNull final Context context) {
@@ -53,21 +54,9 @@ public abstract class Enemy {
 
     public abstract void spawn(Location location);
 
-    /**
-     * Spawn at the default spawn location.
-     */
-    public void spawn() {
-        spawn(getSpawnLocation());
+    public final void spawn() {
+        spawn(spawnLocation);
     }
-
-    /**
-     * The default spawn location for this enemy.
-     */
-    public Location getSpawnLocation() {
-        return getContext().getSpawnLocation();
-    }
-
-    public abstract void setSpawnLocation(Location location);
 
     /**
      * Overriders must call super!
@@ -115,6 +104,11 @@ public abstract class Enemy {
 
     public abstract Collection<UUID> getDamagers();
 
+    /**
+     * Is spawned and still exists?
+     * If this yields true, several others must not return null:
+     * - Locations
+     */
     public abstract boolean isValid();
 
     public abstract boolean isAlive();
@@ -126,6 +120,10 @@ public abstract class Enemy {
     public abstract void setHealth(double h);
 
     public abstract double getMaxHealth();
+
+    public abstract void setTarget(LivingEntity target);
+
+    public abstract LivingEntity getCurrentTarget();
 
     /**
      * Get all damagers who are currently online.
@@ -157,6 +155,7 @@ public abstract class Enemy {
      * Print some basic info used in commands.
      */
     public String getInfo() {
+        if (!isValid()) return getClass().getSimpleName();
         Location loc = getLocation();
         return getClass().getSimpleName()
             + ":" + loc.getWorld().getName()
@@ -164,5 +163,42 @@ public abstract class Enemy {
             + "," + loc.getBlockY()
             + "," + loc.getBlockZ()
             + (isDead() ? "(dead)" : "");
+    }
+
+    /**
+     * Find a valid player target for this Enemy.
+     * We try to find a player visible to this enemy.  Failing that,
+     * we make due with just any player.
+     */
+    public Player findPlayerTarget() {
+        if (!isValid()) return null;
+        List<Player> players = context.getPlayers();
+        if (players.isEmpty()) return null;
+        Location eye = getEyeLocation();
+        double minVisible = Double.MAX_VALUE;
+        double minBlind = Double.MAX_VALUE;
+        Player visible = null;
+        Player blind = null;
+        final double maxVisible = 48 * 48;
+        final double maxBlind = 32 * 32;
+        for (Player player : players) {
+            if (!((LivingEntity) player).isOnGround()) continue;
+            double dist = player.getEyeLocation().distanceSquared(eye);
+            if (hasLineOfSight(player)) {
+                if (dist < minVisible && dist < maxVisible) {
+                    visible = player;
+                    minVisible = dist;
+                }
+            } else {
+                if (dist < minBlind && dist < maxBlind) {
+                    blind = player;
+                    minBlind = dist;
+                }
+            }
+        }
+        if (visible == null && blind == null) return null;
+        Player target = visible != null ? visible : blind;
+        setTarget(target);
+        return target;
     }
 }

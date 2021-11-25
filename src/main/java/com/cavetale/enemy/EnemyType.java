@@ -1,7 +1,14 @@
 package com.cavetale.enemy;
 
-import com.cavetale.enemy.boss.*;
-import com.cavetale.enemy.custom.*;
+import com.cavetale.enemy.boss.DecayedBoss;
+import com.cavetale.enemy.boss.ForgottenBoss;
+import com.cavetale.enemy.boss.InfernalPhantasmBoss;
+import com.cavetale.enemy.boss.QuickBoss;
+import com.cavetale.enemy.boss.SadisticVampireBoss;
+import com.cavetale.enemy.boss.VengefulBoss;
+import com.cavetale.enemy.boss.WickedCroneBoss;
+import com.cavetale.enemy.custom.HealEvoker;
+import com.cavetale.enemy.custom.VampireBat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
