@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @RequiredArgsConstructor
@@ -43,7 +44,6 @@ public final class EnemyListener implements Listener {
     /**
      * WHen an entity explodes.
      * NOTE: This will not be called if mobGriefing is set to false...
-     * We set the GameRule in Instance::setupRun.
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     void onEntityExplode(EntityExplodeEvent event) {
@@ -137,5 +137,14 @@ public final class EnemyListener implements Listener {
         EnemyHandle handle = EnemyPlugin.removeHandle(event.getEntity());
         if (handle == null) return;
         handle.onRemoveFromWorld(event);
+    }
+
+    @EventHandler
+    void onPluginDisable(PluginDisableEvent event) {
+        for (Enemy enemy : Enemy.ID_MAP.values()) {
+            if (enemy.getContext().getPlugin() == event.getPlugin()) {
+                enemy.setContext(DefaultContext.INSTANCE);
+            }
+        }
     }
 }

@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -32,17 +34,22 @@ public abstract class Enemy {
     private static int nextEnemyId = 1;
     protected static final Map<Integer, Enemy> ID_MAP = new HashMap<>();
     @Getter protected final int enemyId;
+    @Getter @Setter protected Context context;
+    private boolean removed;
 
-    protected Enemy() {
+    protected Enemy(@NonNull final Context context) {
         this.enemyId = nextEnemyId++;
         ID_MAP.put(enemyId, this);
+        this.context = context;
     }
 
     public static Enemy ofEnemyId(int theEnemyId) {
         return ID_MAP.get(theEnemyId);
     }
 
-    public abstract Context getContext();
+    public final void resetContext() {
+        this.context = DefaultContext.INSTANCE;
+    }
 
     public abstract void spawn(Location location);
 
@@ -66,6 +73,8 @@ public abstract class Enemy {
      * Overriders must call super!
      */
     public final void remove() {
+        if (removed) return;
+        removed = true;
         onRemove();
         ID_MAP.remove(this.enemyId);
     }

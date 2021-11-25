@@ -8,7 +8,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class EnemyPlugin extends JavaPlugin {
-    @Getter private static EnemyPlugin instance;
+    @Getter protected static EnemyPlugin instance;
     EnemyCommand enemyCommand = new EnemyCommand(this);
     EnemyListener enemyListener = new EnemyListener(this);
     private Map<Integer, EnemyHandle> idHandleMap = new HashMap<>();

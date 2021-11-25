@@ -23,7 +23,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
@@ -32,7 +31,6 @@ import org.bukkit.util.Vector;
  * An enemy wrapping one single LivingEntity.
  */
 public abstract class LivingEnemy extends Enemy {
-    @Getter protected final Context context;
     protected LivingEntity living;
     private double backupSpeed;
     private double mountBackupSpeed;
@@ -42,7 +40,7 @@ public abstract class LivingEnemy extends Enemy {
     @Setter protected Location spawnLocation;
 
     public LivingEnemy(final Context context) {
-        this.context = context;
+        super(context);
     }
 
     public final void markLiving() {
@@ -85,10 +83,6 @@ public abstract class LivingEnemy extends Enemy {
     public final class Handle implements EnemyHandle {
         private BukkitTask task;
 
-        public JavaPlugin getPlugin() {
-            return context.getPlugin();
-        }
-
         @Override
         public Enemy getEnemy() {
             return LivingEnemy.this;
@@ -101,14 +95,14 @@ public abstract class LivingEnemy extends Enemy {
         @Override
         public void onEntityDeath(EntityDeathEvent event) {
             event.getDrops().clear();
-            onDeath();
             context.onDeath(LivingEnemy.this);
+            onDeath();
         }
 
         @Override
         public void onEntityExplode(EntityExplodeEvent event) {
-            onDeath();
             context.onDeath(LivingEnemy.this);
+            onDeath();
         }
 
         @Override
