@@ -1,18 +1,25 @@
 package com.cavetale.enemy.custom;
 
 import com.cavetale.enemy.Context;
+import com.cavetale.enemy.EnemyType;
 import com.cavetale.enemy.LivingEnemy;
+import com.cavetale.enemy.TypedEnemy;
 import com.cavetale.enemy.ability.VampirismAbility;
 import com.cavetale.enemy.util.Prep;
 import org.bukkit.Location;
 import org.bukkit.entity.Bat;
 
-public final class VampireBat extends LivingEnemy {
+public final class VampireBat extends LivingEnemy implements TypedEnemy {
     private VampirismAbility vampirism;
     private Location safeLocation;
 
     public VampireBat(final Context context) {
         super(context);
+    }
+
+    @Override
+    public EnemyType getEnemyType() {
+        return EnemyType.VAMPIRE_BAT;
     }
 
     @Override

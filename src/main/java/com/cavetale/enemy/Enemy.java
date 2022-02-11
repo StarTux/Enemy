@@ -1,5 +1,6 @@
 package com.cavetale.enemy;
 
+import com.cavetale.mytems.event.combat.DamageCalculationEvent;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -201,4 +202,6 @@ public abstract class Enemy {
         setTarget(target);
         return target;
     }
+
+    public void onDefendingDamageCalculation(DamageCalculationEvent event) { }
 }

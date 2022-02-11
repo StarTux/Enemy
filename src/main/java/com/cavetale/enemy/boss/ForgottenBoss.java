@@ -1,7 +1,7 @@
 package com.cavetale.enemy.boss;
 
 import com.cavetale.enemy.Context;
-import com.cavetale.enemy.LivingEnemy;
+import com.cavetale.enemy.EnemyType;
 import com.cavetale.enemy.ability.AbilityPhases;
 import com.cavetale.enemy.ability.DialogueAbility;
 import com.cavetale.enemy.ability.HomeAbility;
@@ -19,14 +19,14 @@ import org.bukkit.entity.Evoker;
 import org.bukkit.entity.Vex;
 import org.bukkit.inventory.EntityEquipment;
 
-public final class ForgottenBoss extends LivingEnemy {
+public final class ForgottenBoss extends LivingBoss {
     @Getter private double maxHealth = 500;
     @Getter private double health = 500;
     @Getter private final Component displayName = Component.text("The Forgotten", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD);
     AbilityPhases phases = new AbilityPhases();
 
     public ForgottenBoss(final Context context) {
-        super(context);
+        super(context, EnemyType.FORGOTTEN);
     }
 
     @Override

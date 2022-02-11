@@ -1,5 +1,6 @@
 package com.cavetale.enemy;
 
+import com.cavetale.mytems.event.combat.DamageCalculationEvent;
 import com.cavetale.enemy.ability.EggLauncherAbility;
 import com.cavetale.enemy.ability.FireworkAbility;
 import com.cavetale.worldmarker.entity.EntityMarker;
@@ -146,5 +147,12 @@ public final class EnemyListener implements Listener {
                 enemy.resetContext();
             }
         }
+    }
+
+    @EventHandler
+    protected void onDamageCalculation(DamageCalculationEvent event) {
+        Enemy enemy = Enemy.of(event.getTarget());
+        if (enemy == null) return;
+        enemy.onDefendingDamageCalculation(event);
     }
 }

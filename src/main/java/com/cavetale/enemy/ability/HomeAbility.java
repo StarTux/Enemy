@@ -2,6 +2,7 @@ package com.cavetale.enemy.ability;
 
 import com.cavetale.enemy.Context;
 import com.cavetale.enemy.Enemy;
+import org.bukkit.Location;
 
 public final class HomeAbility extends AbstractAbility {
     boolean done = false;
@@ -21,7 +22,10 @@ public final class HomeAbility extends AbstractAbility {
 
     @Override
     public boolean onTick(int ticks) {
-        enemy.teleport(enemy.getSpawnLocation());
+        Location loc = enemy.getSpawnLocation();
+        if (loc != null) {
+            enemy.teleport(loc);
+        }
         done = true;
         return true;
     }

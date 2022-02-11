@@ -1,7 +1,7 @@
 package com.cavetale.enemy.boss;
 
 import com.cavetale.enemy.Context;
-import com.cavetale.enemy.LivingEnemy;
+import com.cavetale.enemy.EnemyType;
 import com.cavetale.enemy.ability.AbilityPhases;
 import com.cavetale.enemy.ability.ArrowStormAbility;
 import com.cavetale.enemy.ability.DialogueAbility;
@@ -22,14 +22,14 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-public final class WickedCroneBoss extends LivingEnemy {
+public final class WickedCroneBoss extends LivingBoss {
     @Getter private double maxHealth = 500;
     @Getter private double health = 500;
     @Getter private final Component displayName = Component.text("Wicked Crone", NamedTextColor.DARK_RED, TextDecoration.BOLD);
     AbilityPhases phases;
 
     public WickedCroneBoss(final Context context) {
-        super(context);
+        super(context, EnemyType.WICKED_CRONE);
     }
 
     @Override

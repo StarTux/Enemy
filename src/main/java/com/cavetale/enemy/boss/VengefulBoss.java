@@ -1,7 +1,7 @@
 package com.cavetale.enemy.boss;
 
 import com.cavetale.enemy.Context;
-import com.cavetale.enemy.LivingEnemy;
+import com.cavetale.enemy.EnemyType;
 import com.cavetale.enemy.ability.AbilityPhases;
 import com.cavetale.enemy.ability.DialogueAbility;
 import com.cavetale.enemy.ability.FireworkAbility;
@@ -19,14 +19,14 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Wither;
 
-public final class VengefulBoss extends LivingEnemy {
+public final class VengefulBoss extends LivingBoss {
     @Getter private double maxHealth = 500;
     @Getter private double health = 500;
     @Getter private final Component displayName = Component.text("The Vengeful", NamedTextColor.DARK_GRAY, TextDecoration.BOLD);
     AbilityPhases phases = new AbilityPhases();
 
     public VengefulBoss(final Context context) {
-        super(context);
+        super(context, EnemyType.VENGEFUL);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.cavetale.enemy.boss;
 
 import com.cavetale.enemy.Context;
-import com.cavetale.enemy.LivingEnemy;
+import com.cavetale.enemy.EnemyType;
 import com.cavetale.enemy.ability.AbilityPhases;
 import com.cavetale.enemy.ability.ArrowStormAbility;
 import com.cavetale.enemy.ability.HomeAbility;
@@ -28,8 +28,9 @@ import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import static com.cavetale.enemy.EnemyType.*;
 
-public final class QuickBoss extends LivingEnemy {
+public final class QuickBoss extends LivingBoss {
     @Getter private double maxHealth = 500;
     @Getter private double health = 500;
     @Getter private final Component displayName;
@@ -37,12 +38,61 @@ public final class QuickBoss extends LivingEnemy {
     private final EntityType bossType;
     private final EntityType addType;
 
-    public QuickBoss(final Context context, final String displayName,
+    public QuickBoss(final Context context, final EnemyType enemyType,
+                     final String displayName,
                      final EntityType bossType, final EntityType addType) {
-        super(context);
+        super(context, enemyType);
         this.displayName = Component.text(displayName, NamedTextColor.RED, TextDecoration.BOLD);
         this.bossType = bossType;
         this.addType = addType;
+    }
+
+    public static QuickBoss skellington(Context ctx) {
+        return new QuickBoss(ctx, SKELLINGTON, "Skellington", EntityType.WITHER_SKELETON, EntityType.WITHER_SKELETON);
+    }
+
+    public static QuickBoss deepFear(Context ctx) {
+        return new QuickBoss(ctx, DEEP_FEAR, "Deep Fear", EntityType.ELDER_GUARDIAN, EntityType.GUARDIAN);
+    }
+
+    public static QuickBoss lavaLord(Context ctx) {
+        return new QuickBoss(ctx, LAVA_LORD, "Lava Lord", EntityType.MAGMA_CUBE, EntityType.MAGMA_CUBE);
+    }
+
+    public static QuickBoss frostwrecker(Context ctx) {
+        return new QuickBoss(ctx, FROSTWRECKER, "Frostwrecker", EntityType.DROWNED, EntityType.DROWNED);
+    }
+
+    public static QuickBoss iceGolem(Context ctx) {
+        return new QuickBoss(ctx, ICE_GOLEM, "Ice Golem", EntityType.SNOWMAN, EntityType.SNOWMAN);
+    }
+
+    public static QuickBoss icekelly(Context ctx) {
+        return new QuickBoss(ctx, ICEKELLY, "Icekelly", EntityType.STRAY, EntityType.STRAY);
+    }
+
+    public static QuickBoss snobear(Context ctx) {
+        return new QuickBoss(ctx, SNOBEAR, "Snobear", EntityType.POLAR_BEAR, EntityType.POLAR_BEAR);
+    }
+
+    public static QuickBoss queenBee(Context ctx) {
+        return new QuickBoss(ctx, QUEEN_BEE, "Queen Bee", EntityType.BEE, EntityType.BEE);
+    }
+
+    public static QuickBoss heinousHen(Context ctx) {
+        return new QuickBoss(ctx, HEINOUS_HEN, "Heinous Hen", EntityType.CHICKEN, EntityType.ZOMBIE);
+    }
+
+    public static QuickBoss specter(Context ctx) {
+        return new QuickBoss(ctx, SPECTER, "Specter", EntityType.PHANTOM, EntityType.PHANTOM);
+    }
+
+    public static QuickBoss enderDragon(Context ctx) {
+        return new QuickBoss(ctx, ENDER_DRAGON_BOSS, "Ender Dragon", EntityType.ENDER_DRAGON, EntityType.BLAZE);
+    }
+
+    public static QuickBoss ghast(Context ctx) {
+        return new QuickBoss(ctx, GHAST_BOSS, "Ghast", EntityType.GHAST, EntityType.BLAZE);
     }
 
     @Override
