@@ -43,10 +43,10 @@ public final class EnemyListener implements Listener {
     }
 
     /**
-     * WHen an entity explodes.
+     * When an entity explodes.
      * NOTE: This will not be called if mobGriefing is set to false...
      */
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     void onEntityExplode(EntityExplodeEvent event) {
         EnemyHandle handle = EnemyHandle.of(event.getEntity());
         if (handle == null) return;
