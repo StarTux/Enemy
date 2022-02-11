@@ -358,7 +358,14 @@ public abstract class LivingEnemy extends Enemy {
         }
     }
 
-    protected void onTarget(EntityTargetEvent event) { }
+    /**
+     * Deny targeting other Enemies.
+     */
+    protected void onTarget(EntityTargetEvent event) {
+        if (event.getTarget() != null && Enemy.of(event.getTarget()) != null) {
+            event.setCancelled(true);
+        }
+    }
 
     protected void onPathfind(EntityPathfindEvent event) { }
 
