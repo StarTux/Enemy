@@ -328,7 +328,6 @@ public abstract class LivingEnemy extends Enemy {
      */
     protected void onDeath() {
         dead = true;
-        remove();
     }
 
     /**
