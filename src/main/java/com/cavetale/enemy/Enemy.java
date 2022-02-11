@@ -174,6 +174,11 @@ public abstract class Enemy {
     public Player findPlayerTarget() {
         if (!isValid()) return null;
         List<Player> players = context.getPlayers();
+        players.removeIf(p -> {
+                switch (p.getGameMode()) {
+                case SURVIVAL: case ADVENTURE: return false;
+                case CREATIVE: case SPECTATOR: default: return true;
+                }});
         if (players.isEmpty()) return null;
         Location eye = getEyeLocation();
         double minVisible = Double.MAX_VALUE;
