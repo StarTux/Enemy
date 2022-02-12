@@ -165,9 +165,7 @@ public final class SadisticVampireBoss extends LivingBoss {
     }
 
     @Override
-    public void tick() { }
-
-    public void tickBossFight() {
+    public void tick() {
         switch (phase) {
         case BAT:
             if (!bat.isValid()) {
