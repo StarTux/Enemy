@@ -41,7 +41,7 @@ public abstract class LivingBoss extends LivingEnemy implements TypedEnemy {
      */
     @Override
     public void onDefendingDamageCalculation(DamageCalculationEvent event) {
-        event.setIfApplicable(DamageFactor.ARMOR, value -> Math.min(0.4, value));
-        event.setIfApplicable(DamageFactor.PROTECTION, value -> Math.min(0.4, value));
+        event.setIfApplicable(DamageFactor.ARMOR, value -> Math.min(0.33, value));
+        event.setIfApplicable(DamageFactor.PROTECTION, value -> Math.min(0.33, value));
     }
 }
