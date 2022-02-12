@@ -1,6 +1,7 @@
 package com.cavetale.enemy;
 
 import com.cavetale.mytems.event.combat.DamageCalculationEvent;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -173,7 +174,7 @@ public abstract class Enemy {
      */
     public Player findPlayerTarget() {
         if (!isValid()) return null;
-        List<Player> players = context.getPlayers();
+        List<Player> players = new ArrayList<>(context.getPlayers());
         players.removeIf(p -> {
                 switch (p.getGameMode()) {
                 case SURVIVAL: case ADVENTURE: return false;
