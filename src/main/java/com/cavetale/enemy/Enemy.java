@@ -178,7 +178,7 @@ public abstract class Enemy {
                 switch (p.getGameMode()) {
                 case SURVIVAL: case ADVENTURE: return false;
                 case CREATIVE: case SPECTATOR: default: return true;
-                }});
+                } });
         if (players.isEmpty()) return null;
         Location eye = getEyeLocation();
         double minVisible = Double.MAX_VALUE;

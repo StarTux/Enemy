@@ -6,6 +6,7 @@ import com.cavetale.enemy.LivingEnemy;
 import com.cavetale.enemy.TypedEnemy;
 import com.cavetale.mytems.event.combat.DamageCalculationEvent;
 import com.cavetale.mytems.event.combat.DamageFactor;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public abstract class LivingBoss extends LivingEnemy implements TypedEnemy {
     protected final EnemyType enemyType;
@@ -18,6 +19,20 @@ public abstract class LivingBoss extends LivingEnemy implements TypedEnemy {
     @Override
     public final EnemyType getEnemyType() {
         return this.enemyType;
+    }
+
+    /**
+     * Cancel conventional damage.
+     */
+    @Override
+    public void onDamage(EntityDamageEvent event) {
+        switch (event.getCause()) {
+        case CONTACT:
+        case SUFFOCATION:
+        case LAVA:
+            event.setCancelled(true);
+        default: break;
+        }
     }
 
     /**
