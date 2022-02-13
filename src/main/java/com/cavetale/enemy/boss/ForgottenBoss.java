@@ -58,6 +58,7 @@ public final class ForgottenBoss extends LivingBoss {
 
     @Override
     public void tick() {
+        if (living == null) return;
         phases.tick();
         health = living.getHealth();
     }
