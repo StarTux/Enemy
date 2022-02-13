@@ -112,8 +112,7 @@ public final class QuickBoss extends LivingBoss {
             adds.add(addType.getEntityClass(), 8, 1, this::prepAdd);
         }
         phases.addAbility(new HomeAbility(this, context));
-        if (bossType == EntityType.STRAY) {
-            // Icekelly
+        if (enemyType == EnemyType.ICEKELLY) {
             ArrowStormAbility arrowStorm = phases.addAbility(new ArrowStormAbility(this, context));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 300, 0, true, false, true));

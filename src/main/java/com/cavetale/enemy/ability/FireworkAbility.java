@@ -3,6 +3,9 @@ package com.cavetale.enemy.ability;
 import com.cavetale.enemy.Context;
 import com.cavetale.enemy.Enemy;
 import com.cavetale.worldmarker.entity.EntityMarker;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,43 +54,49 @@ public final class FireworkAbility extends AbstractAbility {
             return true;
         }
         intervalTicks = interval;
-        //
         Location eye = enemy.getEyeLocation();
-        for (Player player : context.getPlayers()) {
-            Location target = player.getEyeLocation();
-            if (target.distance(eye) > 64) continue;
-            if (!enemy.hasLineOfSight(player)) continue;
-            Vector vec = target.subtract(eye).toVector().normalize();
-            Location from = eye.clone().add(vec);
-            Firework firework = enemy.getWorld().spawn(from, Firework.class, fw -> {
-                    fw.setVelocity(vec.multiply(1.0));
-                    FireworkMeta meta = fw.getFireworkMeta();
-                    for (int i = 0; i < fireworkEffects; i += 1) {
-                        FireworkEffect.Builder builder = FireworkEffect.builder();
-                        switch (random.nextInt(4)) {
-                        case 0:
-                            builder.with(FireworkEffect.Type.BALL).withColor(Color.BLACK);
-                            break;
-                        case 1:
-                            builder.with(FireworkEffect.Type.BALL).withColor(Color.RED);
-                            break;
-                        case 2:
-                            builder.with(FireworkEffect.Type.BALL).withColor(Color.ORANGE);
-                            break;
-                        case 3:
-                            builder.with(FireworkEffect.Type.BALL).withColor(Color.YELLOW);
-                            break;
-                        default: break;
-                        }
-                        meta.addEffect(builder.build());
+        List<Player> players = new ArrayList<>(context.getPlayers());
+        players.removeIf(p -> {
+                Location target = p.getEyeLocation();
+                if (!eye.getWorld().equals(target.getWorld())) return true;
+                if (target.distance(eye) > 64) return true;
+                if (!enemy.hasLineOfSight(p)) return true;
+                return false;
+            });
+        if (players.isEmpty()) return true;
+        Collections.shuffle(players);
+        Player player = players.get(0);
+        Location target = player.getEyeLocation();
+        Vector vec = target.subtract(eye).toVector().normalize();
+        Location from = eye.clone().add(vec);
+        Firework firework = enemy.getWorld().spawn(from, Firework.class, fw -> {
+                fw.setVelocity(vec.multiply(1.0));
+                FireworkMeta meta = fw.getFireworkMeta();
+                for (int i = 0; i < fireworkEffects; i += 1) {
+                    FireworkEffect.Builder builder = FireworkEffect.builder();
+                    switch (random.nextInt(4)) {
+                    case 0:
+                        builder.with(FireworkEffect.Type.BALL).withColor(Color.BLACK);
+                        break;
+                    case 1:
+                        builder.with(FireworkEffect.Type.BALL).withColor(Color.RED);
+                        break;
+                    case 2:
+                        builder.with(FireworkEffect.Type.BALL).withColor(Color.ORANGE);
+                        break;
+                    case 3:
+                        builder.with(FireworkEffect.Type.BALL).withColor(Color.YELLOW);
+                        break;
+                    default: break;
                     }
-                    fw.setFireworkMeta(meta);
-                    fw.setPersistent(false);
-                    fw.setShotAtAngle(true);
-                });
-            EntityMarker.setId(firework, FIREWORK_ID);
-            context.registerTemporaryEntity(firework);
-        }
+                    meta.addEffect(builder.build());
+                }
+                fw.setFireworkMeta(meta);
+                fw.setPersistent(false);
+                fw.setShotAtAngle(true);
+            });
+        EntityMarker.setId(firework, FIREWORK_ID);
+        context.registerTemporaryEntity(firework);
         return true;
     }
 }
