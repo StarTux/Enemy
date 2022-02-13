@@ -10,6 +10,7 @@ import com.destroystokyo.paper.event.entity.ProjectileCollideEvent;
 import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -83,6 +84,13 @@ public final class EnemyListener implements Listener {
     @EventHandler(ignoreCancelled = false)
     void onProjectileCollide(ProjectileCollideEvent event) {
         Projectile proj = event.getEntity();
+        if (proj.getShooter() instanceof Entity shooterEntity) {
+            Enemy shooterEnemy = Enemy.of(shooterEntity);
+            Enemy targetEnemy = Enemy.of(event.getCollidedWith());
+            if (shooterEnemy != null && targetEnemy != null) {
+                event.setCancelled(true);
+            }
+        }
         String id = EntityMarker.getId(proj);
         if (id == null) return;
         switch (id) {
