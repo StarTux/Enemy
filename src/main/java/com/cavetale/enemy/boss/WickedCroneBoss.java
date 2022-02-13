@@ -18,6 +18,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.MagmaCube;
 import org.bukkit.entity.Witch;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -87,5 +88,10 @@ public final class WickedCroneBoss extends LivingBoss {
         if (phases != null) {
             phases.end();
         }
+    }
+
+    @Override
+    public void onEntityRegainHealth(EntityRegainHealthEvent event) {
+        event.setCancelled(true);
     }
 }
