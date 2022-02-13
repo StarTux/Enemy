@@ -22,6 +22,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
@@ -210,4 +211,6 @@ public abstract class Enemy {
     }
 
     public void onDefendingDamageCalculation(DamageCalculationEvent event) { }
+
+    public void onEntityRegainHealth(EntityRegainHealthEvent event) { }
 }

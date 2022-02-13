@@ -1,8 +1,8 @@
 package com.cavetale.enemy;
 
-import com.cavetale.mytems.event.combat.DamageCalculationEvent;
 import com.cavetale.enemy.ability.EggLauncherAbility;
 import com.cavetale.enemy.ability.FireworkAbility;
+import com.cavetale.mytems.event.combat.DamageCalculationEvent;
 import com.cavetale.worldmarker.entity.EntityMarker;
 import com.destroystokyo.paper.event.entity.EntityPathfindEvent;
 import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -154,5 +155,11 @@ public final class EnemyListener implements Listener {
         Enemy enemy = Enemy.of(event.getTarget());
         if (enemy == null) return;
         enemy.onDefendingDamageCalculation(event);
+    }
+
+    @EventHandler
+    protected void onEntityRegainHealth(EntityRegainHealthEvent event) {
+        Enemy enemy = Enemy.of(event.getEntity());
+        if (enemy != null) enemy.onEntityRegainHealth(event);
     }
 }

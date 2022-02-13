@@ -18,6 +18,7 @@ import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Wither;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 
 public final class VengefulBoss extends LivingBoss {
     @Getter private double maxHealth = 500;
@@ -81,5 +82,12 @@ public final class VengefulBoss extends LivingBoss {
         Prep.attr(ghast, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0);
         Prep.attr(ghast, Attribute.GENERIC_ARMOR, 20.0); // dia=20
         Prep.attr(ghast, Attribute.GENERIC_ARMOR_TOUGHNESS, 8.0); // dia=8
+    }
+
+    @Override
+    public void onEntityRegainHealth(EntityRegainHealthEvent event) {
+        if (event.getRegainReason() == EntityRegainHealthEvent.RegainReason.REGEN) {
+            event.setCancelled(true);
+        }
     }
 }
