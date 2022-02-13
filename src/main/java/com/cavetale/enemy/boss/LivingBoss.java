@@ -39,9 +39,9 @@ public abstract class LivingBoss extends LivingEnemy implements TypedEnemy {
      * Make sure the boss has a reasonable minimum armor and
      * protection enchantments.
      */
-    // @Override
-    // public void onDefendingDamageCalculation(DamageCalculationEvent event) {
-    //     event.setIfApplicable(DamageFactor.ARMOR, value -> Math.min(0.33, value));
-    //     event.setIfApplicable(DamageFactor.PROTECTION, value -> Math.min(0.33, value));
-    // }
+    @Override
+    public void onDefendingDamageCalculation(DamageCalculationEvent event) {
+        event.setIfApplicable(DamageFactor.ARMOR, value -> Math.min(0.33, value));
+        event.setIfApplicable(DamageFactor.PROTECTION, value -> Math.min(0.33, value));
+    }
 }
