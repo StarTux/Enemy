@@ -58,6 +58,7 @@ public final class VengefulBoss extends LivingBoss {
 
     @Override
     public void tick() {
+        if (living == null || !living.isValid()) return;
         phases.tick();
         health = living.getHealth();
     }

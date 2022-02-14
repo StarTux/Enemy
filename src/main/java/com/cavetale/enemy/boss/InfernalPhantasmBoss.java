@@ -71,6 +71,7 @@ public final class InfernalPhantasmBoss extends LivingBoss {
 
     @Override
     public void tick() {
+        if (living == null || !living.isValid()) return;
         phases.tick();
         health = living.getHealth();
     }
