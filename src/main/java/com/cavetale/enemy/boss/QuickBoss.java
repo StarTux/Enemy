@@ -20,6 +20,7 @@ import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.MagmaCube;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
@@ -80,7 +81,7 @@ public final class QuickBoss extends LivingBoss {
     }
 
     public static QuickBoss heinousHen(Context ctx) {
-        return new QuickBoss(ctx, HEINOUS_HEN, "Heinous Hen", EntityType.CHICKEN, EntityType.ZOMBIE);
+        return new QuickBoss(ctx, HEINOUS_HEN, "Heinous Hen", EntityType.CHICKEN, EntityType.BEE);
     }
 
     public static QuickBoss specter(Context ctx) {
@@ -99,9 +100,6 @@ public final class QuickBoss extends LivingBoss {
     public void spawn(Location location) {
         living = (LivingEntity) location.getWorld().spawn(location, bossType.getEntityClass(), this::prep);
         markLiving();
-        if (living instanceof Phantom) {
-            ((Phantom) living).setSize(20);
-        }
         phases = new AbilityPhases();
         phases.addAbility(new PushAbility(this, context));
         PauseAbility pause = phases.addAbility(new PauseAbility(this, context, 100));
@@ -120,9 +118,6 @@ public final class QuickBoss extends LivingBoss {
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 0, true, false, true));
             arrowStorm.setDuration(200);
             arrowStorm.setInterval(1);
-        }
-        if (living instanceof EnderDragon) {
-            ((EnderDragon) living).setPhase(EnderDragon.Phase.CHARGE_PLAYER);
         }
         phases.begin();
     }
@@ -155,11 +150,15 @@ public final class QuickBoss extends LivingBoss {
         living.customName(displayName);
         Prep.health(living, health, maxHealth);
         Prep.boss(living);
+        if (entity instanceof Phantom phantom) phantom.setSize(20);
+        if (living instanceof EnderDragon enderDragon) enderDragon.setPhase(EnderDragon.Phase.CHARGE_PLAYER);
+        if (living instanceof MagmaCube magmaCube) magmaCube.setSize(8);
     }
 
     private void prepAdd(Entity entity) {
         LivingEntity living = (LivingEntity) entity;
         Prep.disableEquipmentDrop(living);
+        if (entity instanceof Bee bee) bee.setAnger(72000);
     }
 
     @Override
