@@ -64,6 +64,11 @@ public final class EnemyListener implements Listener {
 
     @EventHandler(ignoreCancelled = false)
     void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        Enemy attackerEnemy = Enemy.of(event.getDamager());
+        Enemy targetEnemy = Enemy.of(event.getEntity());
+        if (attackerEnemy != null && targetEnemy != null) {
+            event.setCancelled(true);
+        }
         if (event.getCause() == DamageCause.ENTITY_EXPLOSION && EntityMarker.hasId(event.getDamager(), EggLauncherAbility.EXPLOSIVE_EGG_ID)) {
             if (!(event.getEntity() instanceof Player)) {
                 event.setCancelled(true);
