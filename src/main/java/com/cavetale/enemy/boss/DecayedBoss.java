@@ -41,7 +41,7 @@ public final class DecayedBoss extends LivingBoss {
         dialogue.addDialogue("Welcome home.");
         FireworkAbility firework = phases.addAbility(new FireworkAbility(this, context));
         firework.setDuration(160);
-        firework.setInterval(40);
+        firework.setInterval(4);
         PauseAbility pause = phases.addAbility(new PauseAbility(this, context, 100));
         SpawnAddsAbility adds = phases.addAbility(new SpawnAddsAbility(this, context));
         adds.add(WitherSkeleton.class, 8, 1, this::prepAdd);

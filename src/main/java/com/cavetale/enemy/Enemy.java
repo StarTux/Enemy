@@ -175,7 +175,7 @@ public abstract class Enemy {
      */
     public Player findPlayerTarget() {
         if (!isValid()) return null;
-        List<Player> players = new ArrayList<>(context.getPlayers());
+        List<Player> players = new ArrayList<>(context.getPlayers(this));
         players.removeIf(p -> {
                 switch (p.getGameMode()) {
                 case SURVIVAL: case ADVENTURE: return false;

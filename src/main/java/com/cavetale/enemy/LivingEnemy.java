@@ -379,10 +379,13 @@ public abstract class LivingEnemy extends Enemy {
     public String getInfo() {
         Location loc = getLocation();
         return (living != null ? living.getType().name() : getClass().getSimpleName())
-            + ":" + loc.getWorld().getName()
-            + ":" + loc.getBlockX()
-            + "," + loc.getBlockY()
-            + "," + loc.getBlockZ()
+            + ":"
+            + (loc != null
+               ? (loc.getWorld().getName()
+                  + ":" + loc.getBlockX()
+                  + "," + loc.getBlockY()
+                  + "," + loc.getBlockZ())
+               : "-")
             + (isDead() ? "(dead)" : "");
     }
 }

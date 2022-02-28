@@ -105,7 +105,7 @@ public final class SadisticVampireBoss extends LivingBoss {
                 bat = null;
             }
             living = null;
-            List<Player> targets = context.getPlayers().stream()
+            List<Player> targets = context.getPlayers(this).stream()
                 .filter(p -> Loc.isNearby(p.getLocation(), location, 32.0))
                 .collect(Collectors.toList());
             if (targets.isEmpty()) {

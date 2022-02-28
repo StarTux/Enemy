@@ -33,7 +33,7 @@ public final class SlipIceAbility extends AbstractAbility {
     public boolean onTick(int ticks) {
         if (done) return true;
         done = true;
-        for (Player player : context.getPlayers()) {
+        for (Player player : context.getPlayers(enemy)) {
             Vector vec = new Vector(rnd(), 0, rnd())
                 .normalize().multiply(1.5);
             player.setVelocity(player.getVelocity().add(vec));

@@ -18,7 +18,7 @@ public interface Context {
      * List players eligible for combat. Maybe within range, maybe
      * not.
      */
-    List<Player> getPlayers();
+    List<Player> getPlayers(Enemy enemy);
 
     /**
      * Register a new enemy. Presumably it was spawned by the boss as

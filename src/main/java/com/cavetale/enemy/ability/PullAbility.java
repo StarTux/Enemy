@@ -38,7 +38,7 @@ public final class PullAbility extends AbstractAbility {
         intervalTicks = interval;
         //
         Location eye = enemy.getEyeLocation();
-        for (Player player : context.getPlayers()) {
+        for (Player player : context.getPlayers(enemy)) {
             Location loc = player.getLocation();
             if (loc.distance(eye) < 8) continue;
             Vector vec = eye.subtract(loc).toVector().normalize().multiply(3.0);

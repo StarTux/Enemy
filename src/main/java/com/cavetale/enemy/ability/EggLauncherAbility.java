@@ -3,6 +3,7 @@ package com.cavetale.enemy.ability;
 import com.cavetale.enemy.Context;
 import com.cavetale.enemy.Enemy;
 import com.cavetale.worldmarker.entity.EntityMarker;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import lombok.Getter;
@@ -51,7 +52,7 @@ public final class EggLauncherAbility extends AbstractAbility {
         }
         intervalTicks = interval;
         //
-        List<Player> players = context.getPlayers();
+        List<Player> players = new ArrayList<>(context.getPlayers(enemy));
         players.removeIf(p -> !enemy.hasLineOfSight(p));
         if (players.isEmpty()) return true;
         Player target = players.get(random.nextInt(players.size()));

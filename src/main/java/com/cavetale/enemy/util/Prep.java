@@ -4,8 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.entity.AbstractSkeleton;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
+import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.EntityEquipment;
 
 /**
@@ -60,6 +62,12 @@ public final class Prep {
         entity.setPersistent(false);
         entity.setMaximumNoDamageTicks(0);
         disableEquipmentDrop(entity);
+        if (entity instanceof Zombie zombie) {
+            zombie.setShouldBurnInDay(false);
+        }
+        if (entity instanceof AbstractSkeleton skeleton) {
+            skeleton.setShouldBurnInDay(false);
+        }
     }
 
     public static void add(LivingEntity entity) {

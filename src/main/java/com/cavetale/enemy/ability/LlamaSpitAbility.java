@@ -40,7 +40,7 @@ public final class LlamaSpitAbility extends AbstractAbility {
         }
         intervalTicks = interval;
         //
-        List<Player> players = context.getPlayers();
+        List<Player> players = context.getPlayers(enemy);
         Player target = players.get(random.nextInt(players.size()));
         Vector velo = target.getEyeLocation()
             .subtract(enemy.getEyeLocation())

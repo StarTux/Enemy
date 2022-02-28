@@ -46,7 +46,7 @@ public final class LightningAbility extends AbstractAbility {
         //
         final int stateTicks = lightningTicks++;
         if (stateTicks == 10) {
-            findLightningSpot(context.getPlayers());
+            findLightningSpot(context.getPlayers(enemy));
         } else if (stateTicks == 30) {
             for (Location location : lightningSpots) {
                 enemy.getWorld().strikeLightning(location);

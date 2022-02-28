@@ -73,7 +73,7 @@ public final class ThrowAbility extends AbstractAbility {
         }
         intervalTicks = interval;
         //
-        Player target = findTarget(context.getPlayers());
+        Player target = findTarget(context.getPlayers(enemy));
         if (target == null) return true;
         Vector vec = new Vector(rnd(), 0, rnd()).multiply(1.5).setY(1.5);
         target.setVelocity(target.getVelocity().add(vec));

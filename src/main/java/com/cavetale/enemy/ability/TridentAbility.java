@@ -35,7 +35,7 @@ public final class TridentAbility extends AbstractAbility {
 
     @Override
     public boolean onTick(int ticks) {
-        List<Player> players = context.getPlayers();
+        List<Player> players = context.getPlayers(enemy);
         players.removeIf(p -> !enemy.hasLineOfSight(p));
         if (players.isEmpty()) return true;
         Player target = players.get(random.nextInt(players.size()));

@@ -92,7 +92,7 @@ public final class QuickBoss extends LivingBoss {
     }
 
     public static QuickBoss ghast(Context ctx) {
-        return new QuickBoss(ctx, GHAST_BOSS, "Ghast", EntityType.GHAST, EntityType.BLAZE);
+        return new QuickBoss(ctx, GHAST_BOSS, "Ur-Ghast", EntityType.GHAST, EntityType.BLAZE);
     }
 
     @Override
@@ -119,7 +119,7 @@ public final class QuickBoss extends LivingBoss {
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 0, true, false, true));
             arrowStorm.setDuration(200);
-            arrowStorm.setInterval(10);
+            arrowStorm.setInterval(1);
         }
         if (living instanceof EnderDragon) {
             ((EnderDragon) living).setPhase(EnderDragon.Phase.CHARGE_PLAYER);

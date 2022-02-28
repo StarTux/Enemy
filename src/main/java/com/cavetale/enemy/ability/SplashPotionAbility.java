@@ -4,6 +4,7 @@ import com.cavetale.enemy.Context;
 import com.cavetale.enemy.Enemy;
 import com.cavetale.enemy.util.ItemBuilder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import lombok.Getter;
@@ -48,14 +49,16 @@ public final class SplashPotionAbility extends AbstractAbility {
         intervalTicks = interval;
         //
         if (potionItems.isEmpty()) return false;
+        List<Player> players = new ArrayList<>(context.getPlayers(enemy));
+        players.removeIf(p -> !enemy.hasLineOfSight(p));
+        if (players.isEmpty()) return true;
+        Collections.shuffle(players);
+        Player player = players.get(0);
+        Location loc = player.getEyeLocation();
         Location eye = enemy.getEyeLocation();
-        for (Player player : context.getPlayers()) {
-            if (!enemy.hasLineOfSight(player)) continue;
-            Location loc = player.getEyeLocation();
-            Vector vec = loc.subtract(eye).toVector().normalize().multiply(2.0);
-            ThrownPotion potion = enemy.launchProjectile(ThrownPotion.class, vec);
-            potion.setItem(potionItems.get(random.nextInt(potionItems.size())).clone());
-        }
+        Vector vec = loc.subtract(eye).toVector().normalize().multiply(2.0);
+        ThrownPotion potion = enemy.launchProjectile(ThrownPotion.class, vec);
+        potion.setItem(potionItems.get(random.nextInt(potionItems.size())).clone());
         return true;
     }
 

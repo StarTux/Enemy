@@ -1,6 +1,7 @@
 package com.cavetale.enemy;
 
 import java.util.List;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,8 +15,11 @@ public final class DefaultContext implements Context {
     }
 
     @Override
-    public List<Player> getPlayers() {
-        return List.of();
+    public List<Player> getPlayers(Enemy enemy) {
+        Location location = enemy.getLocation();
+        return location != null
+            ? List.copyOf(location.getNearbyEntitiesByType(Player.class, 64.0))
+            : List.of();
     }
 
     @Override

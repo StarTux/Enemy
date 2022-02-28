@@ -41,7 +41,7 @@ public final class FireballAbility extends AbstractAbility {
         intervalTicks = interval;
         //
         Location eye = enemy.getEyeLocation();
-        for (Player player : context.getPlayers()) {
+        for (Player player : context.getPlayers(enemy)) {
             if (!enemy.hasLineOfSight(player)) continue;
             Location target = player.getEyeLocation();
             Vector vec = target.subtract(eye).toVector().normalize().multiply(velocity);

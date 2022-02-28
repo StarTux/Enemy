@@ -39,7 +39,7 @@ public final class DialogueAbility extends AbstractAbility {
             .build();
         dialogueIndex += 1;
         if (dialogueIndex >= dialogues.size()) dialogueIndex = 0;
-        for (Player player : context.getPlayers()) {
+        for (Player player : context.getPlayers(enemy)) {
             player.sendMessage(message);
             player.sendActionBar(message);
         }

@@ -49,7 +49,7 @@ public final class VampirismAbility extends AbstractAbility {
             intervalTicks = interval;
         }
         Location eye = enemy.getEyeLocation();
-        for (Player player : context.getPlayers()) {
+        for (Player player : context.getPlayers(enemy)) {
             if (!enemy.hasLineOfSight(player)) continue;
             Vector vec = player.getEyeLocation().subtract(eye).toVector().multiply(Math.random());
             Location particleLocation = eye.clone().add(vec);

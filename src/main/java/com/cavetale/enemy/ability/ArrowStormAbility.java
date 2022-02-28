@@ -58,8 +58,7 @@ public final class ArrowStormAbility extends AbstractAbility {
             return true;
         }
         intervalTicks = interval;
-        //
-        List<Player> players = context.getPlayers();
+        List<Player> players = new ArrayList<>(context.getPlayers(enemy));
         players.removeIf(p -> !enemy.hasLineOfSight(p));
         if (players.isEmpty()) return true;
         Player target = players.get(random.nextInt(players.size()));

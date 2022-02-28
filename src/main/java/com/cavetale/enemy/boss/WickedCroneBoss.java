@@ -51,7 +51,7 @@ public final class WickedCroneBoss extends LivingBoss {
             splash.addPotionItem(new ItemBuilder(Material.SPLASH_POTION).basePotion(PotionType.WEAKNESS, true, false).create());
             splash.addPotionItem(new ItemBuilder(Material.SPLASH_POTION).basePotion(PotionType.INSTANT_DAMAGE, false, true).create());
             splash.setDuration(200);
-            splash.setInterval(20);
+            splash.setInterval(4);
             PauseAbility pause = phases.addAbility(new PauseAbility(this, context));
             pause.setDuration(60);
             SpawnAddsAbility adds = phases.addAbility(new SpawnAddsAbility(this, context));
@@ -65,7 +65,7 @@ public final class WickedCroneBoss extends LivingBoss {
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 0, true, false, true));
             arrowStorm.setDuration(200);
-            arrowStorm.setInterval(10);
+            arrowStorm.setInterval(1);
         }
     }
 

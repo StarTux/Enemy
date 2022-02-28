@@ -55,7 +55,7 @@ public final class FireworkAbility extends AbstractAbility {
         }
         intervalTicks = interval;
         Location eye = enemy.getEyeLocation();
-        List<Player> players = new ArrayList<>(context.getPlayers());
+        List<Player> players = new ArrayList<>(context.getPlayers(enemy));
         players.removeIf(p -> {
                 Location target = p.getEyeLocation();
                 if (!eye.getWorld().equals(target.getWorld())) return true;
