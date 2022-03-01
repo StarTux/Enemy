@@ -54,6 +54,8 @@ public final class Prep {
     }
 
     public static void boss(LivingEntity entity) {
+        if (entity instanceof Zombie zombie) zombie.setShouldBurnInDay(false);
+        if (entity instanceof AbstractSkeleton skeleton) skeleton.setShouldBurnInDay(false);
         attr(entity, Attribute.GENERIC_ATTACK_DAMAGE, 10.0);
         attr(entity, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0);
         attr(entity, Attribute.GENERIC_ARMOR, 20.0); // dia=20
@@ -62,12 +64,6 @@ public final class Prep {
         entity.setPersistent(false);
         entity.setMaximumNoDamageTicks(0);
         disableEquipmentDrop(entity);
-        if (entity instanceof Zombie zombie) {
-            zombie.setShouldBurnInDay(false);
-        }
-        if (entity instanceof AbstractSkeleton skeleton) {
-            skeleton.setShouldBurnInDay(false);
-        }
     }
 
     public static void add(LivingEntity entity) {

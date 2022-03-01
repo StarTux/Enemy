@@ -146,13 +146,13 @@ public final class QuickBoss extends LivingBoss {
     }
 
     private void prep(Entity entity) {
+        if (entity instanceof Phantom phantom) phantom.setSize(20);
+        if (entity instanceof EnderDragon enderDragon) enderDragon.setPhase(EnderDragon.Phase.CHARGE_PLAYER);
+        if (entity instanceof MagmaCube magmaCube) magmaCube.setSize(8);
         LivingEntity living = (LivingEntity) entity;
         living.customName(displayName);
         Prep.health(living, health, maxHealth);
         Prep.boss(living);
-        if (entity instanceof Phantom phantom) phantom.setSize(20);
-        if (living instanceof EnderDragon enderDragon) enderDragon.setPhase(EnderDragon.Phase.CHARGE_PLAYER);
-        if (living instanceof MagmaCube magmaCube) magmaCube.setSize(8);
     }
 
     private void prepAdd(Entity entity) {
