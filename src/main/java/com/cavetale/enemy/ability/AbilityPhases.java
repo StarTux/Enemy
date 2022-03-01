@@ -27,7 +27,6 @@ public final class AbilityPhases implements Ability {
         if (abilityIsNew) {
             ability.begin();
             abilityIsNew = false;
-            System.out.println("ABILITY " + ability.getClass().getSimpleName());
         }
         if (!ability.tick()) {
             ability.end();
