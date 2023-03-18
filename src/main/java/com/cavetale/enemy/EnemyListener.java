@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
@@ -190,5 +191,13 @@ public final class EnemyListener implements Listener {
     protected void onEntityRegainHealth(EntityRegainHealthEvent event) {
         Enemy enemy = Enemy.of(event.getEntity());
         if (enemy != null) enemy.onEntityRegainHealth(event);
+    }
+
+    @EventHandler
+    protected void onEntityPotionEffect(EntityPotionEffectEvent event) {
+        Enemy enemy = Enemy.of(event.getEntity());
+        if (enemy != null) {
+            enemy.onEntityPotionEffect(event);
+        }
     }
 }

@@ -22,6 +22,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BoundingBox;
@@ -212,6 +213,8 @@ public abstract class Enemy {
     }
 
     public void onDefendingDamageCalculation(DamageCalculationEvent event) { }
+
+    public void onEntityPotionEffect(EntityPotionEffectEvent event) { }
 
     public void onEntityRegainHealth(EntityRegainHealthEvent event) { }
 }

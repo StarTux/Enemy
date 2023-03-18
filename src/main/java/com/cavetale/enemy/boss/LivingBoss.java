@@ -7,6 +7,7 @@ import com.cavetale.enemy.TypedEnemy;
 import com.cavetale.mytems.event.combat.DamageCalculationEvent;
 import com.cavetale.mytems.event.combat.DamageFactor;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
 
 public abstract class LivingBoss extends LivingEnemy implements TypedEnemy {
     protected final EnemyType enemyType;
@@ -48,6 +49,18 @@ public abstract class LivingBoss extends LivingEnemy implements TypedEnemy {
             double base = event.getCalculation().getBaseDamage();
             event.getCalculation().setBaseDamage(Math.max(0.0, base - 5.0));
             event.setHandled(true);
+        }
+    }
+
+    @Override
+    public void onEntityPotionEffect(EntityPotionEffectEvent event) {
+        switch (event.getCause()) {
+        case AREA_EFFECT_CLOUD:
+        case ARROW:
+        case ATTACK:
+        case WITHER_ROSE:
+            event.setCancelled(true);
+        default: break;
         }
     }
 }
