@@ -66,7 +66,6 @@ public final class EnemyListener implements Listener {
             case ENTITY_ATTACK:
             case PROJECTILE:
                 enemy.setLastDamage(System.currentTimeMillis());
-                plugin.getLogger().info("ENEMY " + ((int) enemy.getHealth()) + "/" + ((int) enemy.getMaxHealth()));
             default: break;
             }
         }
