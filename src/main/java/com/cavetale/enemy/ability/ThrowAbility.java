@@ -23,7 +23,7 @@ public final class ThrowAbility extends AbstractAbility {
 
     public ThrowAbility(final Enemy enemy, final Context context) {
         super(enemy, context);
-        duration = 400;
+        duration = 60;
     }
 
     @Override

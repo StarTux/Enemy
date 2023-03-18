@@ -64,6 +64,7 @@ public final class WickedCroneBoss extends LivingBoss {
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 0, true, false, true));
+            arrowStorm.setDamage(15.0);
             arrowStorm.setDuration(200);
             arrowStorm.setInterval(1);
         }

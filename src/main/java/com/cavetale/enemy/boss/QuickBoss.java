@@ -5,9 +5,10 @@ import com.cavetale.enemy.EnemyType;
 import com.cavetale.enemy.ability.AbilityPhases;
 import com.cavetale.enemy.ability.ArrowStormAbility;
 import com.cavetale.enemy.ability.HomeAbility;
+import com.cavetale.enemy.ability.LightningAbility;
 import com.cavetale.enemy.ability.PauseAbility;
-import com.cavetale.enemy.ability.PushAbility;
 import com.cavetale.enemy.ability.SpawnAddsAbility;
+import com.cavetale.enemy.ability.ThrowAbility;
 import com.cavetale.enemy.util.Prep;
 import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
 import lombok.Getter;
@@ -96,12 +97,16 @@ public final class QuickBoss extends LivingBoss {
         return new QuickBoss(ctx, GHAST_BOSS, "Ur-Ghast", EntityType.GHAST, EntityType.BLAZE);
     }
 
+    public static QuickBoss warden(Context ctx) {
+        return new QuickBoss(ctx, WARDEN_BOSS, "Blind Guardian", EntityType.WARDEN, EntityType.ENDERMAN);
+    }
+
     @Override
     public void spawn(Location location) {
         living = (LivingEntity) location.getWorld().spawn(location, bossType.getEntityClass(), this::prep);
         markLiving();
         phases = new AbilityPhases();
-        phases.addAbility(new PushAbility(this, context));
+        phases.addAbility(new ThrowAbility(this, context));
         PauseAbility pause = phases.addAbility(new PauseAbility(this, context, 100));
         SpawnAddsAbility adds = phases.addAbility(new SpawnAddsAbility(this, context));
         if (addType == EntityType.BEE) {
@@ -116,8 +121,21 @@ public final class QuickBoss extends LivingBoss {
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 0, true, false, true));
+            arrowStorm.setDamage(15.0);
             arrowStorm.setDuration(200);
             arrowStorm.setInterval(1);
+        } else if (enemyType == EnemyType.WARDEN_BOSS) {
+            ArrowStormAbility arrowStorm = phases.addAbility(new ArrowStormAbility(this, context));
+            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 0, true, false, true));
+            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 300, 0, true, false, true));
+            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 300, 0, true, false, true));
+            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 0, true, false, true));
+            arrowStorm.setDamage(15.0);
+            arrowStorm.setDuration(200);
+            arrowStorm.setInterval(1);
+        } else if (enemyType == EnemyType.HEINOUS_HEN) {
+            LightningAbility lightning = phases.addAbility(new LightningAbility(this, context));
+            lightning.setDuration(20 * 60);
         }
         phases.begin();
     }

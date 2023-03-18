@@ -48,7 +48,10 @@ public enum EnemyType {
     INFERNAL_PHANTASM(BOSS, InfernalPhantasmBoss.class, InfernalPhantasmBoss::new),
     // 2021
     ENDER_DRAGON_BOSS(BOSS, QuickBoss.class, QuickBoss::enderDragon),
-    GHAST_BOSS(BOSS, QuickBoss.class, QuickBoss::ghast);
+    GHAST_BOSS(BOSS, QuickBoss.class, QuickBoss::ghast),
+    // 2023
+    WARDEN_BOSS(BOSS, QuickBoss.class, QuickBoss::warden),
+    ;
 
     public final EnemyCategory category;
     public final Class<? extends Enemy> type;

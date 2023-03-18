@@ -3,7 +3,7 @@ main: com.cavetale.enemy.EnemyPlugin
 name: Enemy
 version: 0.1
 description: Enemy Plugin
-api-version: 1.13
+api-version: 1.19
 
 author: StarTux
 website: https://github.com/StarTux/Enemy

@@ -2,6 +2,7 @@ package com.cavetale.enemy;
 
 import com.cavetale.enemy.ability.EggLauncherAbility;
 import com.cavetale.enemy.ability.FireworkAbility;
+import com.cavetale.enemy.ability.LightningAbility;
 import com.cavetale.mytems.event.combat.DamageCalculationEvent;
 import com.cavetale.worldmarker.entity.EntityMarker;
 import com.destroystokyo.paper.event.entity.EntityPathfindEvent;
@@ -58,8 +59,14 @@ public final class EnemyListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     void onEntityDamage(EntityDamageEvent event) {
         Enemy enemy = Enemy.of(event.getEntity());
-        if (enemy != null && enemy.isInvulnerable()) {
-            event.setCancelled(true);
+        if (enemy != null) {
+            if (enemy.isInvulnerable()) event.setCancelled(true);
+            switch (event.getCause()) {
+            case ENTITY_ATTACK:
+            case PROJECTILE:
+                enemy.setLastDamage(System.currentTimeMillis());
+            default: break;
+            }
         }
         EnemyHandle handle = EnemyHandle.of(event.getEntity());
         if (handle == null) return;
@@ -79,8 +86,13 @@ public final class EnemyListener implements Listener {
             }
         } else if (EntityMarker.hasId(event.getDamager(), FireworkAbility.FIREWORK_ID)) {
             if (event.getEntity() instanceof Player) {
-                double base = event.getFinalDamage();
-                event.setDamage(base * 1.25);
+                event.setDamage(15.0);
+            } else {
+                event.setCancelled(true);
+            }
+        } else if (EntityMarker.hasId(event.getDamager(), LightningAbility.LIGHTNING_ID)) {
+            if (event.getEntity() instanceof Player) {
+                event.setDamage(15.0);
             } else {
                 event.setCancelled(true);
             }

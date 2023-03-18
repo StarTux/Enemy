@@ -56,10 +56,10 @@ public final class Prep {
     public static void boss(LivingEntity entity) {
         if (entity instanceof Zombie zombie) zombie.setShouldBurnInDay(false);
         if (entity instanceof AbstractSkeleton skeleton) skeleton.setShouldBurnInDay(false);
-        attr(entity, Attribute.GENERIC_ATTACK_DAMAGE, 10.0);
+        attr(entity, Attribute.GENERIC_ATTACK_DAMAGE, 15.0);
         attr(entity, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0);
-        attr(entity, Attribute.GENERIC_ARMOR, 20.0); // dia=20
-        attr(entity, Attribute.GENERIC_ARMOR_TOUGHNESS, 8.0); // dia=8
+        attr(entity, Attribute.GENERIC_ARMOR, 20.0); // diamond or netherite
+        attr(entity, Attribute.GENERIC_ARMOR_TOUGHNESS, 12.0); // netherite
         entity.setCustomNameVisible(true);
         entity.setPersistent(false);
         entity.setMaximumNoDamageTicks(0);

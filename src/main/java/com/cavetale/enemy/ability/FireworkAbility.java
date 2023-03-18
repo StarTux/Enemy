@@ -28,7 +28,7 @@ public final class FireworkAbility extends AbstractAbility {
     @Getter @Setter private int fireworkEffects = 3;
     private int intervalTicks = 0;
     private final Random random = new Random();
-    public static final String FIREWORK_ID = "raid:firework";
+    public static final String FIREWORK_ID = "enemy:firework";
 
     public FireworkAbility(final Enemy enemy, final Context context) {
         super(enemy, context);

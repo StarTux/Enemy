@@ -2,6 +2,7 @@ package com.cavetale.enemy.ability;
 
 import com.cavetale.enemy.Context;
 import com.cavetale.enemy.Enemy;
+import com.cavetale.worldmarker.entity.EntityMarker;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.Player;
 
 public final class LightningAbility extends AbstractAbility {
@@ -19,6 +21,7 @@ public final class LightningAbility extends AbstractAbility {
     private UUID lightningTarget;
     private List<Location> lightningSpots = new ArrayList<>();
     private final Random random = new Random();
+    public static final String LIGHTNING_ID = "enemy:lightning";
 
     public LightningAbility(final Enemy enemy, final Context context) {
         super(enemy, context);
@@ -49,14 +52,17 @@ public final class LightningAbility extends AbstractAbility {
             findLightningSpot(context.getPlayers(enemy));
         } else if (stateTicks == 30) {
             for (Location location : lightningSpots) {
-                enemy.getWorld().strikeLightning(location);
+                enemy.getWorld().spawn(location, LightningStrike.class, lightning -> {
+                        EntityMarker.setId(lightning, LIGHTNING_ID);
+                        lightning.setLifeTicks(20 * 2);
+                    });
             }
             intervalTicks = interval;
         }
         return true;
     }
 
-    void findLightningSpot(List<Player> players) {
+    private void findLightningSpot(List<Player> players) {
         lightningSpots.clear();
         Player target;
         if (lightningTarget == null) {

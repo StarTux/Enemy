@@ -23,7 +23,7 @@ public final class HomeAbility extends AbstractAbility {
     @Override
     public boolean onTick(int ticks) {
         Location loc = enemy.getSpawnLocation();
-        if (loc != null) {
+        if (loc != null && System.currentTimeMillis() - enemy.getLastDamage() > 10_000L) {
             enemy.teleport(loc);
         }
         done = true;
