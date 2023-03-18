@@ -52,6 +52,9 @@ public abstract class LivingBoss extends LivingEnemy implements TypedEnemy {
         }
     }
 
+    /**
+     * Make immune to potion effects.
+     */
     @Override
     public void onEntityPotionEffect(EntityPotionEffectEvent event) {
         switch (event.getCause()) {

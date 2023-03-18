@@ -4,6 +4,7 @@ import com.cavetale.enemy.Context;
 import com.cavetale.enemy.EnemyType;
 import com.cavetale.enemy.ability.AbilityPhases;
 import com.cavetale.enemy.ability.ArrowStormAbility;
+import com.cavetale.enemy.ability.FireballAbility;
 import com.cavetale.enemy.ability.HomeAbility;
 import com.cavetale.enemy.ability.LightningAbility;
 import com.cavetale.enemy.ability.PauseAbility;
@@ -24,6 +25,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.MagmaCube;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Phantom;
+import org.bukkit.entity.PiglinAbstract;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SizedFireball;
 import org.bukkit.event.Event;
@@ -101,6 +103,10 @@ public final class QuickBoss extends LivingBoss {
         return new QuickBoss(ctx, WARDEN_BOSS, "Blind Guardian", EntityType.WARDEN, EntityType.ENDERMAN);
     }
 
+    public static QuickBoss piglinBrute(Context ctx) {
+        return new QuickBoss(ctx, PIGLIN_BRUTE_BOSS, "Major Pain", EntityType.PIGLIN_BRUTE, EntityType.ZOMBIFIED_PIGLIN);
+    }
+
     @Override
     public void spawn(Location location) {
         living = (LivingEntity) location.getWorld().spawn(location, bossType.getEntityClass(), this::prep);
@@ -136,6 +142,12 @@ public final class QuickBoss extends LivingBoss {
         } else if (enemyType == EnemyType.HEINOUS_HEN) {
             LightningAbility lightning = phases.addAbility(new LightningAbility(this, context));
             lightning.setDuration(20 * 60);
+        } else if (enemyType == EnemyType.PIGLIN_BRUTE_BOSS) {
+            FireballAbility fireballs = phases.addAbility(new FireballAbility(this, context));
+            fireballs.setVelocity(3.0);
+            fireballs.setLargeChance(0.0);
+            fireballs.setDuration(20 * 30);
+            fireballs.setInterval(2);
         }
         phases.begin();
     }
@@ -167,6 +179,7 @@ public final class QuickBoss extends LivingBoss {
         if (entity instanceof Phantom phantom) phantom.setSize(20);
         if (entity instanceof EnderDragon enderDragon) enderDragon.setPhase(EnderDragon.Phase.CHARGE_PLAYER);
         if (entity instanceof MagmaCube magmaCube) magmaCube.setSize(8);
+        if (entity instanceof PiglinAbstract piglin) piglin.setImmuneToZombification(true);
         LivingEntity living = (LivingEntity) entity;
         living.customName(displayName);
         Prep.health(living, health, maxHealth);

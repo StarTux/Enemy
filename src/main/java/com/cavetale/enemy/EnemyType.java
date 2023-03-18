@@ -51,6 +51,7 @@ public enum EnemyType {
     GHAST_BOSS(BOSS, QuickBoss.class, QuickBoss::ghast),
     // 2023
     WARDEN_BOSS(BOSS, QuickBoss.class, QuickBoss::warden),
+    PIGLIN_BRUTE_BOSS(BOSS, QuickBoss.class, QuickBoss::piglinBrute),
     ;
 
     public final EnemyCategory category;
