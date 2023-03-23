@@ -190,6 +190,9 @@ public final class QuickBoss extends LivingBoss {
         LivingEntity living = (LivingEntity) entity;
         Prep.disableEquipmentDrop(living);
         if (entity instanceof Bee bee) bee.setAnger(72000);
+        if (entity instanceof PiglinAbstract piglin) {
+            piglin.setImmuneToZombification(true);
+        }
     }
 
     @Override
