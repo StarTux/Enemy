@@ -139,7 +139,7 @@ public final class QuickBoss extends LivingBoss {
             arrowStorm.setDamage(15.0);
             arrowStorm.setDuration(200);
             arrowStorm.setInterval(1);
-        } else if (enemyType == EnemyType.HEINOUS_HEN) {
+        } else if (enemyType == EnemyType.HEINOUS_HEN || enemyType == SPECTER) {
             LightningAbility lightning = phases.addAbility(new LightningAbility(this, context));
             lightning.setDuration(20 * 60);
         } else if (enemyType == EnemyType.PIGLIN_BRUTE_BOSS) {
