@@ -11,6 +11,7 @@ import lombok.Value;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.EntityEquipment;
 
 /**
@@ -69,7 +70,7 @@ public final class SpawnAddsAbility extends AbstractAbility {
         int count = context.countTemporaryEntities(add.type);
         int spawned = 0;
         while (count < add.maximum && spawned < add.simultaneous) {
-            Entity entity = enemy.getWorld().spawn(enemy.getLocation(), add.type, e -> spawnCallback(e, add));
+            Entity entity = enemy.getWorld().spawn(enemy.getLocation(), add.type, SpawnReason.SPELL, e -> spawnCallback(e, add));
             if (entity != null) {
                 count += 1;
                 spawned += 1;
