@@ -6,10 +6,13 @@ import com.cavetale.enemy.LivingEnemy;
 import com.cavetale.enemy.TypedEnemy;
 import com.cavetale.mytems.event.combat.DamageCalculationEvent;
 import com.cavetale.mytems.event.combat.DamageFactor;
+import lombok.Getter;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 
 public abstract class LivingBoss extends LivingEnemy implements TypedEnemy {
+    @Getter protected double maxHealth = 500;
+    @Getter protected double health = 500;
     protected final EnemyType enemyType;
 
     protected LivingBoss(final Context context, final EnemyType enemyType) {
@@ -20,6 +23,14 @@ public abstract class LivingBoss extends LivingEnemy implements TypedEnemy {
     @Override
     public final EnemyType getEnemyType() {
         return this.enemyType;
+    }
+
+    /**
+     * This must be called before spawning the boss!
+     */
+    public final void setMaxHealth(final double value) {
+        this.maxHealth = value;
+        this.health = value;
     }
 
     /**

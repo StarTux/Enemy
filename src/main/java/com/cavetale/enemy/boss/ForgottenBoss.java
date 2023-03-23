@@ -20,8 +20,6 @@ import org.bukkit.entity.Vex;
 import org.bukkit.inventory.EntityEquipment;
 
 public final class ForgottenBoss extends LivingBoss {
-    @Getter private double maxHealth = 500;
-    @Getter private double health = 500;
     @Getter private final Component displayName = Component.text("The Forgotten", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD);
     AbilityPhases phases = new AbilityPhases();
 

@@ -35,8 +35,6 @@ import org.bukkit.potion.PotionEffectType;
 import static com.cavetale.enemy.EnemyType.*;
 
 public final class QuickBoss extends LivingBoss {
-    @Getter private double maxHealth = 500;
-    @Getter private double health = 500;
     @Getter private final Component displayName;
     private AbilityPhases phases;
     private final EntityType bossType;

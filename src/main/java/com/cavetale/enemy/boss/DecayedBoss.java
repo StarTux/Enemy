@@ -21,8 +21,6 @@ import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.inventory.EntityEquipment;
 
 public final class DecayedBoss extends LivingBoss {
-    @Getter private double maxHealth = 500;
-    @Getter private double health = 500;
     @Getter private final Component displayName = Component.text("The Decayed", NamedTextColor.DARK_RED, TextDecoration.BOLD);
     private AbilityPhases phases;
 

@@ -24,8 +24,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 public final class WickedCroneBoss extends LivingBoss {
-    @Getter private double maxHealth = 500;
-    @Getter private double health = 500;
     @Getter private final Component displayName = Component.text("Wicked Crone", NamedTextColor.DARK_RED, TextDecoration.BOLD);
     AbilityPhases phases;
 

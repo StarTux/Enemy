@@ -27,8 +27,6 @@ import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.util.Vector;
 
 public final class SadisticVampireBoss extends LivingBoss {
-    @Getter private double maxHealth = 500;
-    @Getter private double health = 500;
     @Getter private final Component displayName = Component.text("Sadistic Vampire", NamedTextColor.DARK_RED, TextDecoration.BOLD);
     AbilityPhases batPhases;
     AbilityPhases evokerPhases;

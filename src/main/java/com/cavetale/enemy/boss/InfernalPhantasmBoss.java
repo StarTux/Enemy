@@ -19,8 +19,6 @@ import org.bukkit.entity.PiglinBrute;
 import org.bukkit.entity.Zoglin;
 
 public final class InfernalPhantasmBoss extends LivingBoss {
-    @Getter private double maxHealth = 500;
-    @Getter private double health = 500;
     @Getter private final Component displayName = Component.text("Infernal Phantasm", NamedTextColor.DARK_RED, TextDecoration.BOLD);
     AbilityPhases phases;
 

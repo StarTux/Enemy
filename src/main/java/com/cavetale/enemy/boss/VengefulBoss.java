@@ -21,8 +21,6 @@ import org.bukkit.entity.Wither;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 
 public final class VengefulBoss extends LivingBoss {
-    @Getter private double maxHealth = 500;
-    @Getter private double health = 500;
     @Getter private final Component displayName = Component.text("The Vengeful", NamedTextColor.DARK_GRAY, TextDecoration.BOLD);
     AbilityPhases phases = new AbilityPhases();
 
