@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
@@ -208,6 +209,9 @@ public abstract class Enemy {
         }
         if (visible == null && blind == null) return null;
         Player target = visible != null ? visible : blind;
+        if (getLivingEntity() != null && !new EntityTargetEvent(getLivingEntity(), target, EntityTargetEvent.TargetReason.CUSTOM).callEvent()) {
+            return null;
+        }
         setTarget(target);
         return target;
     }
