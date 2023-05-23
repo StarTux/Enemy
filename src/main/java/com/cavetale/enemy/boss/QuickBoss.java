@@ -18,6 +18,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.entity.Bee;
+import org.bukkit.entity.Chicken;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -140,6 +141,7 @@ public final class QuickBoss extends LivingBoss {
         } else if (enemyType == EnemyType.HEINOUS_HEN || enemyType == SPECTER) {
             LightningAbility lightning = phases.addAbility(new LightningAbility(this, context));
             lightning.setDuration(20 * 60);
+            lightning.setInterval(60);
         } else if (enemyType == EnemyType.PIGLIN_BRUTE_BOSS) {
             FireballAbility fireballs = phases.addAbility(new FireballAbility(this, context));
             fireballs.setVelocity(3.0);
@@ -168,8 +170,10 @@ public final class QuickBoss extends LivingBoss {
                 findPlayerTarget();
             }
         }
-        if (living instanceof Bee) {
-            ((Bee) living).setHasStung(false);
+        if (living instanceof Bee bee) {
+            bee.setHasStung(false);
+        } else if (living instanceof Chicken chicken) {
+            chicken.setEggLayTime(72000);
         }
     }
 
