@@ -40,7 +40,11 @@ public final class Prep {
 
     public static void attr(Attributable entity, Attribute attribute, double value) {
         AttributeInstance inst = entity.getAttribute(attribute);
-        if (inst == null) return;
+        if (inst == null) {
+            entity.registerAttribute(attribute);
+            inst = entity.getAttribute(attribute);
+            if (inst == null) return;
+        }
         inst.setBaseValue(value);
     }
 
