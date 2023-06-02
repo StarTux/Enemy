@@ -17,6 +17,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Bee;
 import org.bukkit.entity.Chicken;
@@ -152,6 +153,8 @@ public final class QuickBoss extends LivingBoss {
         } else if (enemyType == EnemyType.SNOBEAR && living instanceof Ageable ageable) {
             ageable.setBaby();
             ageable.setAgeLock(true);
+        } else if (enemyType == EnemyType.HEINOUS_HEN) {
+            Prep.attr(living, Attribute.GENERIC_MOVEMENT_SPEED, 0.1);
         }
         phases.begin();
     }
