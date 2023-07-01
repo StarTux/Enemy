@@ -1,5 +1,6 @@
 package com.cavetale.enemy.util;
 
+import com.cavetale.worldmarker.util.Tags;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
@@ -9,6 +10,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.EntityEquipment;
+import static com.cavetale.mytems.MytemsPlugin.namespacedKey;
 
 /**
  * Utility class to prepare an entity for battle, quickly.
@@ -68,6 +70,7 @@ public final class Prep {
         entity.setPersistent(false);
         entity.setMaximumNoDamageTicks(0);
         disableEquipmentDrop(entity);
+        Tags.set(entity.getPersistentDataContainer(), namespacedKey("skillPoints"), 100);
     }
 
     public static void add(LivingEntity entity) {
