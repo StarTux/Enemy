@@ -75,6 +75,6 @@ public final class VampirismAbility extends AbstractAbility {
     }
 
     public boolean isResistant(Player player) {
-        return Equipment.of(player).hasSetBonus(AculaItemSet.getInstance().vampirismResistance);
+        return false;
     }
 }
