@@ -2,8 +2,6 @@ package com.cavetale.enemy.ability;
 
 import com.cavetale.enemy.Context;
 import com.cavetale.enemy.Enemy;
-import com.cavetale.mytems.gear.Equipment;
-import com.cavetale.mytems.item.acula.AculaItemSet;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Color;
@@ -54,10 +52,10 @@ public final class VampirismAbility extends AbstractAbility {
             Vector vec = player.getEyeLocation().subtract(eye).toVector().multiply(Math.random());
             Location particleLocation = eye.clone().add(vec);
             if (isResistant(player)) {
-                enemy.getWorld().spawnParticle(Particle.REDSTONE, particleLocation, 1, 0, 0, 0, 0, new Particle.DustOptions(Color.BLUE, 1.0f));
+                enemy.getWorld().spawnParticle(Particle.DUST, particleLocation, 1, 0, 0, 0, 0, new Particle.DustOptions(Color.BLUE, 1.0f));
                 continue;
             }
-            enemy.getWorld().spawnParticle(Particle.REDSTONE, particleLocation, 1, 0, 0, 0, 0, new Particle.DustOptions(Color.RED, 0.5f));
+            enemy.getWorld().spawnParticle(Particle.DUST, particleLocation, 1, 0, 0, 0, 0, new Particle.DustOptions(Color.RED, 0.5f));
             if (activeTicks % 16 == 0) {
                 player.getWorld().playSound(player.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.PLAYERS, 0.5f, 2.0f);
             }

@@ -11,7 +11,6 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -55,13 +54,10 @@ public final class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder basePotion(@NonNull PotionType type, boolean extended, boolean upgraded) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta instanceof PotionMeta) {
-            PotionMeta potion = (PotionMeta) meta;
-            potion.setBasePotionData(new PotionData(type, extended, upgraded));
-            item.setItemMeta(potion);
-        }
+    public ItemBuilder basePotion(@NonNull PotionType type) {
+        item.editMeta(PotionMeta.class, meta -> {
+                meta.setBasePotionType(type);
+            });
         return this;
     }
 

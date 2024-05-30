@@ -20,6 +20,7 @@ import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Bee;
+import org.bukkit.entity.Breedable;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
@@ -69,7 +70,7 @@ public final class QuickBoss extends LivingBoss {
     }
 
     public static QuickBoss iceGolem(Context ctx) {
-        return new QuickBoss(ctx, ICE_GOLEM, "Ice Golem", EntityType.SNOWMAN, EntityType.SNOWMAN);
+        return new QuickBoss(ctx, ICE_GOLEM, "Ice Golem", EntityType.SNOW_GOLEM, EntityType.SNOW_GOLEM);
     }
 
     public static QuickBoss icekelly(Context ctx) {
@@ -124,16 +125,16 @@ public final class QuickBoss extends LivingBoss {
         phases.addAbility(new HomeAbility(this, context));
         if (enemyType == EnemyType.ICEKELLY) {
             ArrowStormAbility arrowStorm = phases.addAbility(new ArrowStormAbility(this, context));
-            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 0, true, false, true));
+            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 0, true, false, true));
-            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 0, true, false, true));
+            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_DAMAGE, 1, 0, true, false, true));
             arrowStorm.setDamage(15.0);
             arrowStorm.setDuration(200);
             arrowStorm.setInterval(1);
         } else if (enemyType == EnemyType.WARDEN_BOSS) {
             ArrowStormAbility arrowStorm = phases.addAbility(new ArrowStormAbility(this, context));
-            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 0, true, false, true));
+            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 0, true, false, true));
@@ -152,7 +153,9 @@ public final class QuickBoss extends LivingBoss {
             fireballs.setInterval(2);
         } else if (enemyType == EnemyType.SNOBEAR && living instanceof Ageable ageable) {
             ageable.setBaby();
-            ageable.setAgeLock(true);
+            if (living instanceof Breedable breedable) {
+                breedable.setAgeLock(true);
+            }
         } else if (enemyType == EnemyType.HEINOUS_HEN) {
             Prep.attr(living, Attribute.GENERIC_MOVEMENT_SPEED, 0.1);
         }

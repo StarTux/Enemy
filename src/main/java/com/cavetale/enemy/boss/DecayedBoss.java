@@ -65,7 +65,7 @@ public final class DecayedBoss extends LivingBoss {
         eq.setHelmet(new ItemBuilder(Material.CARVED_PUMPKIN).create());
         eq.setItemInMainHand(new ItemBuilder(Material.DIAMOND_SWORD)
                              .ench(Enchantment.KNOCKBACK, 2)
-                             .ench(Enchantment.DAMAGE_ALL, 5)
+                             .ench(Enchantment.SHARPNESS, 5)
                              .removeDamage().create());
         entity.customName(displayName);
         Prep.health(entity, health, maxHealth);

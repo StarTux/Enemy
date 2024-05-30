@@ -44,10 +44,10 @@ public final class WickedCroneBoss extends LivingBoss {
             dialogue.addDialogue("The ritual is nearly complete!");
             SplashPotionAbility splash = phases.addAbility(new SplashPotionAbility(this, context));
             splash.clearPotionItems();
-            splash.addPotionItem(new ItemBuilder(Material.SPLASH_POTION).basePotion(PotionType.SLOWNESS, false, true).create());
-            splash.addPotionItem(new ItemBuilder(Material.SPLASH_POTION).basePotion(PotionType.POISON, false, true).create());
-            splash.addPotionItem(new ItemBuilder(Material.SPLASH_POTION).basePotion(PotionType.WEAKNESS, true, false).create());
-            splash.addPotionItem(new ItemBuilder(Material.SPLASH_POTION).basePotion(PotionType.INSTANT_DAMAGE, false, true).create());
+            splash.addPotionItem(new ItemBuilder(Material.SPLASH_POTION).basePotion(PotionType.LONG_SLOWNESS).create());
+            splash.addPotionItem(new ItemBuilder(Material.SPLASH_POTION).basePotion(PotionType.STRONG_POISON).create());
+            splash.addPotionItem(new ItemBuilder(Material.SPLASH_POTION).basePotion(PotionType.LONG_WEAKNESS).create());
+            splash.addPotionItem(new ItemBuilder(Material.SPLASH_POTION).basePotion(PotionType.STRONG_HARMING).create());
             splash.setDuration(200);
             splash.setInterval(4);
             PauseAbility pause = phases.addAbility(new PauseAbility(this, context));
@@ -58,10 +58,10 @@ public final class WickedCroneBoss extends LivingBoss {
             adds.setDuration(200);
             adds.setInterval(40);
             ArrowStormAbility arrowStorm = phases.addAbility(new ArrowStormAbility(this, context));
-            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 0, true, false, true));
+            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 300, 0, true, false, true));
             arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 0, true, false, true));
-            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 0, true, false, true));
+            arrowStorm.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_DAMAGE, 1, 0, true, false, true));
             arrowStorm.setDamage(15.0);
             arrowStorm.setDuration(200);
             arrowStorm.setInterval(1);

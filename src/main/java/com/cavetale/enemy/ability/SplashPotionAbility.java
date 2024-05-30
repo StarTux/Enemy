@@ -28,8 +28,8 @@ public final class SplashPotionAbility extends AbstractAbility {
         super(enemy, context);
         duration = 100;
         warmup = 20;
-        potionItems.add(new ItemBuilder(Material.SPLASH_POTION).basePotion(PotionType.POISON, false, false).create());
-        potionItems.add(new ItemBuilder(Material.SPLASH_POTION).customEffect(PotionEffectType.CONFUSION, 100, 0).create());
+        potionItems.add(new ItemBuilder(Material.SPLASH_POTION).basePotion(PotionType.POISON).create());
+        potionItems.add(new ItemBuilder(Material.SPLASH_POTION).customEffect(PotionEffectType.NAUSEA, 100, 0).create());
     }
 
     @Override

@@ -127,7 +127,7 @@ public final class SadisticVampireBoss extends LivingBoss {
                     spawnBat(evoker.getLocation().add(Math.random() * 0.5 - Math.random() * 0.5,
                                                       Math.random() * 1.0 - Math.random() * 1.0,
                                                       Math.random() * 0.5 - Math.random() * 0.5));
-                    evoker.getWorld().spawnParticle(Particle.SMOKE_LARGE, evoker.getLocation().add(0, 1, 0), 16, 0, 0, 0, 0);
+                    evoker.getWorld().spawnParticle(Particle.LARGE_SMOKE, evoker.getLocation().add(0, 1, 0), 16, 0, 0, 0, 0);
                 }
                 evoker.remove();
                 evoker = null;
@@ -195,7 +195,7 @@ public final class SadisticVampireBoss extends LivingBoss {
             }
             double progress = (double) phaseTicks / (double) phaseDuration;
             Location loc = location.clone().add(targetVector.clone().multiply(progress));
-            loc.getWorld().spawnParticle(Particle.SMOKE_LARGE, loc, 4, 0, 0, 0, 0);
+            loc.getWorld().spawnParticle(Particle.LARGE_SMOKE, loc, 4, 0, 0, 0, 0);
             if (Math.random() < 0.1) {
                 spawnBat(loc);
             }
