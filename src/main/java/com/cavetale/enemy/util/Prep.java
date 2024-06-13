@@ -8,6 +8,7 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.AbstractSkeleton;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
+import org.bukkit.entity.Spider;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.EntityEquipment;
 import static com.cavetale.mytems.MytemsPlugin.namespacedKey;
@@ -66,6 +67,7 @@ public final class Prep {
         attr(entity, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0);
         attr(entity, Attribute.GENERIC_ARMOR, 20.0); // diamond or netherite
         attr(entity, Attribute.GENERIC_ARMOR_TOUGHNESS, 12.0); // netherite
+        entity.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(Math.max(2.0, (4.0 / entity.getHeight())));
         entity.setCustomNameVisible(true);
         entity.setPersistent(false);
         entity.setMaximumNoDamageTicks(0);
@@ -75,6 +77,11 @@ public final class Prep {
 
     public static void add(LivingEntity entity) {
         entity.setPersistent(false);
+        if (entity instanceof Spider) {
+            entity.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(0.35);
+        } else {
+            entity.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(0.75);
+        }
         disableEquipmentDrop(entity);
     }
 

@@ -28,7 +28,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.MagmaCube;
 import org.bukkit.entity.Mob;
-import org.bukkit.entity.Phantom;
 import org.bukkit.entity.PiglinAbstract;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SizedFireball;
@@ -188,9 +187,8 @@ public final class QuickBoss extends LivingBoss {
     }
 
     private void prep(Entity entity) {
-        if (entity instanceof Phantom phantom) phantom.setSize(20);
         if (entity instanceof EnderDragon enderDragon) enderDragon.setPhase(EnderDragon.Phase.CHARGE_PLAYER);
-        if (entity instanceof MagmaCube magmaCube) magmaCube.setSize(8);
+        if (entity instanceof MagmaCube magmaCube) magmaCube.setSize(1);
         if (entity instanceof PiglinAbstract piglin) piglin.setImmuneToZombification(true);
         LivingEntity living = (LivingEntity) entity;
         living.customName(displayName);
