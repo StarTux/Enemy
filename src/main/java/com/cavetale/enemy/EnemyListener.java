@@ -7,7 +7,6 @@ import com.cavetale.mytems.event.combat.DamageCalculationEvent;
 import com.cavetale.worldmarker.entity.EntityMarker;
 import com.destroystokyo.paper.event.entity.EntityPathfindEvent;
 import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
-import com.destroystokyo.paper.event.entity.ProjectileCollideEvent;
 import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
@@ -103,35 +102,30 @@ public final class EnemyListener implements Listener {
         handle.onEntityDamageByEntity(event);
     }
 
-    @EventHandler(ignoreCancelled = false)
-    void onProjectileCollide(ProjectileCollideEvent event) {
-        Projectile proj = event.getEntity();
-        if (proj.getShooter() instanceof Entity shooterEntity) {
-            Enemy shooterEnemy = Enemy.of(shooterEntity);
-            Enemy targetEnemy = Enemy.of(event.getCollidedWith());
+    @EventHandler
+    private void onProjectileHit(ProjectileHitEvent event) {
+        final Projectile proj = event.getEntity();
+        // Explosive egg ability
+        if (EntityMarker.hasId(proj, EggLauncherAbility.EXPLOSIVE_EGG_ID)) {
+            if (!(event.getHitEntity() instanceof Player)) {
+                event.setCancelled(true);
+            } else {
+                proj.getWorld().createExplosion(proj, 1.0f);
+                proj.remove();
+            }
+        } else if (EntityMarker.hasId(proj, FireworkAbility.FIREWORK_ID)) {
+            // doesn't seem to work with fireworks
+            if (!(event.getHitEntity() instanceof Player)) {
+                event.setCancelled(true);
+            }
+        }
+        // Prevent enemies hitting other enemies
+        if (proj.getShooter() instanceof Entity shooterEntity && event.getHitEntity() != null) {
+            final Enemy shooterEnemy = Enemy.of(shooterEntity);
+            final Enemy targetEnemy = Enemy.of(event.getHitEntity());
             if (shooterEnemy != null && targetEnemy != null) {
                 event.setCancelled(true);
             }
-        }
-        String id = EntityMarker.getId(proj);
-        if (id == null) return;
-        switch (id) {
-        case EggLauncherAbility.EXPLOSIVE_EGG_ID:
-        case FireworkAbility.FIREWORK_ID: // doesn't seem to work with fireworks
-            if (!(event.getCollidedWith() instanceof Player)) {
-                event.setCancelled(true);
-            }
-            break;
-        default: break;
-        }
-    }
-
-    @EventHandler
-    void onProjectileHit(ProjectileHitEvent event) {
-        Projectile proj = event.getEntity();
-        if (EntityMarker.hasId(proj, EggLauncherAbility.EXPLOSIVE_EGG_ID)) {
-            proj.getWorld().createExplosion(proj, 1.0f);
-            proj.remove();
         }
     }
 
