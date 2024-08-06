@@ -11,7 +11,6 @@ import com.cavetale.enemy.ability.PauseAbility;
 import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.ability.ThrowAbility;
 import com.cavetale.enemy.util.Prep;
-import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -31,7 +30,6 @@ import org.bukkit.entity.Mob;
 import org.bukkit.entity.PiglinAbstract;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SizedFireball;
-import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -202,14 +200,6 @@ public final class QuickBoss extends LivingBoss {
         if (entity instanceof Bee bee) bee.setAnger(72000);
         if (entity instanceof PiglinAbstract piglin) {
             piglin.setImmuneToZombification(true);
-        }
-    }
-
-    @Override
-    public void onRandomEvent(Event event) {
-        if (event instanceof WitchConsumePotionEvent) {
-            ((WitchConsumePotionEvent) event).setCancelled(true);
-            return;
         }
     }
 

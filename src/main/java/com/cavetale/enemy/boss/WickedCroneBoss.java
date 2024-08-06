@@ -10,6 +10,7 @@ import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.ability.SplashPotionAbility;
 import com.cavetale.enemy.util.ItemBuilder;
 import com.cavetale.enemy.util.Prep;
+import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -18,6 +19,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.MagmaCube;
 import org.bukkit.entity.Witch;
+import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -72,8 +74,9 @@ public final class WickedCroneBoss extends LivingBoss {
         witch.customName(displayName);
         witch.setCustomNameVisible(true);
         witch.setPersistent(false);
-        Prep.health(witch, health, maxHealth);
         Prep.disableEquipmentDrop(witch);
+        Prep.health(witch, health, maxHealth);
+        Prep.boss(witch);
     }
 
     @Override
@@ -93,5 +96,13 @@ public final class WickedCroneBoss extends LivingBoss {
     @Override
     public void onEntityRegainHealth(EntityRegainHealthEvent event) {
         event.setCancelled(true);
+    }
+
+    @Override
+    public void onRandomEvent(Event event) {
+        if (event instanceof WitchConsumePotionEvent witchConsumePotionEvent) {
+            witchConsumePotionEvent.setCancelled(true);
+            return;
+        }
     }
 }
