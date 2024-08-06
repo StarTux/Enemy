@@ -12,6 +12,7 @@ import com.cavetale.enemy.custom.VampireBat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import static com.cavetale.enemy.EnemyCategory.*;
 
@@ -20,6 +21,7 @@ import static com.cavetale.enemy.EnemyCategory.*;
  * because of legacy stuff (see missing ctor). Might become obsolete
  * in the future.
  */
+@Getter
 @RequiredArgsConstructor
 public enum EnemyType {
     // Halloween 2019

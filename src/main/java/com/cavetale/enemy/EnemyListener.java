@@ -8,11 +8,14 @@ import com.cavetale.worldmarker.entity.EntityMarker;
 import com.destroystokyo.paper.event.entity.EntityPathfindEvent;
 import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
 import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
+import java.util.concurrent.ThreadLocalRandom;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Trident;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -125,6 +128,17 @@ public final class EnemyListener implements Listener {
             final Enemy targetEnemy = Enemy.of(event.getHitEntity());
             if (shooterEnemy != null && targetEnemy != null) {
                 event.setCancelled(true);
+            }
+        }
+        // Lower arrow damage to bosses
+        if (proj instanceof AbstractArrow arrow && !(arrow instanceof Trident) && proj.getShooter() instanceof Player shooter && event.getHitEntity() != null) {
+            final Enemy enemy = Enemy.of(event.getHitEntity());
+            if (enemy instanceof TypedEnemy typed && typed.isBoss()) {
+                final double damage = Math.max(1.0, arrow.getDamage() - 10.0);
+                arrow.setDamage(damage);
+                if (ThreadLocalRandom.current().nextDouble() * 5.0 >= damage) {
+                    event.setCancelled(true);
+                }
             }
         }
     }
