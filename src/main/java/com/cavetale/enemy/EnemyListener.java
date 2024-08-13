@@ -203,8 +203,23 @@ public final class EnemyListener implements Listener {
     @EventHandler
     protected void onEntityPotionEffect(EntityPotionEffectEvent event) {
         Enemy enemy = Enemy.of(event.getEntity());
-        if (enemy != null) {
-            enemy.onEntityPotionEffect(event);
+        if (enemy == null) return;
+        enemy.onEntityPotionEffect(event);
+        if (enemy instanceof TypedEnemy typed && typed.isBoss()) {
+            switch (event.getAction()) {
+            case ADDED: break;
+            default: return;
+            }
+            switch (event.getCause()) {
+            case AREA_EFFECT_CLOUD:
+            case ARROW:
+            case ATTACK:
+            case POTION_SPLASH:
+            case WITHER_ROSE:
+                break;
+            default: return;
+            }
+            event.setCancelled(true);
         }
     }
 
