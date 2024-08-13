@@ -20,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Bat;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
@@ -41,7 +42,7 @@ public final class SadisticVampireBoss extends LivingBoss {
     private final int ticksPerBlock = 2;
 
     public SadisticVampireBoss(final Context context) {
-        super(context, EnemyType.SADISTIC_VAMPIRE);
+        super(context, EnemyType.SADISTIC_VAMPIRE, EntityType.BAT);
     }
 
     enum Phase {

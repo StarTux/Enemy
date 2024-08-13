@@ -8,13 +8,14 @@ import com.cavetale.enemy.ability.VampirismAbility;
 import com.cavetale.enemy.util.Prep;
 import org.bukkit.Location;
 import org.bukkit.entity.Bat;
+import org.bukkit.entity.EntityType;
 
 public final class VampireBat extends LivingEnemy implements TypedEnemy {
     private VampirismAbility vampirism;
     private Location safeLocation;
 
     public VampireBat(final Context context) {
-        super(context);
+        super(context, EntityType.BAT);
     }
 
     @Override

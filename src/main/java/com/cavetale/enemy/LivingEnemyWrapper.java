@@ -8,7 +8,7 @@ import org.bukkit.entity.LivingEntity;
  */
 public final class LivingEnemyWrapper extends LivingEnemy {
     public LivingEnemyWrapper(final Context context, final LivingEntity entity) {
-        super(context);
+        super(context, entity.getType());
         this.living = entity;
         markLiving();
     }

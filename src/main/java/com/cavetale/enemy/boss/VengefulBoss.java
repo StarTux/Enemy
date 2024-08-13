@@ -16,6 +16,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Wither;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -25,7 +26,7 @@ public final class VengefulBoss extends LivingBoss {
     AbilityPhases phases = new AbilityPhases();
 
     public VengefulBoss(final Context context) {
-        super(context, EnemyType.VENGEFUL);
+        super(context, EnemyType.VENGEFUL, EntityType.WITHER);
     }
 
     @Override

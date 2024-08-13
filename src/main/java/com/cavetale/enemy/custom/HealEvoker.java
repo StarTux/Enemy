@@ -5,6 +5,7 @@ import com.cavetale.enemy.LivingEnemy;
 import com.cavetale.enemy.ability.HealEnemyAbility;
 import com.cavetale.enemy.util.Prep;
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
 import org.bukkit.event.entity.EntitySpellCastEvent;
 
@@ -12,7 +13,7 @@ public final class HealEvoker extends LivingEnemy {
     HealEnemyAbility healAbility;
 
     public HealEvoker(final Context context) {
-        super(context);
+        super(context, EntityType.EVOKER);
     }
 
     @Override

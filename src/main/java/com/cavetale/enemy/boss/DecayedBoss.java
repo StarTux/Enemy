@@ -16,6 +16,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.inventory.EntityEquipment;
@@ -25,7 +26,7 @@ public final class DecayedBoss extends LivingBoss {
     private AbilityPhases phases;
 
     public DecayedBoss(final Context context) {
-        super(context, EnemyType.DECAYED);
+        super(context, EnemyType.DECAYED, EntityType.WITHER_SKELETON);
     }
 
     @Override

@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Projectile;
@@ -29,16 +30,19 @@ import org.bukkit.util.Vector;
 /**
  * An enemy wrapping one single LivingEntity.
  */
+@Getter
 public abstract class LivingEnemy extends Enemy {
+    protected final EntityType entityType;
     protected LivingEntity living;
     private double backupSpeed;
     private double mountBackupSpeed;
     private boolean invulnerable;
-    @Getter private boolean dead = false; // overrides
-    @Getter private final Set<UUID> damagers = new HashSet<>();
+    private boolean dead = false; // overrides
+    private final Set<UUID> damagers = new HashSet<>();
 
-    public LivingEnemy(final Context context) {
+    public LivingEnemy(final Context context, final EntityType entityType) {
         super(context);
+        this.entityType = entityType;
     }
 
     public final void markLiving() {

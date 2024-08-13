@@ -17,6 +17,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.MagmaCube;
 import org.bukkit.entity.Witch;
 import org.bukkit.event.Event;
@@ -30,7 +31,7 @@ public final class WickedCroneBoss extends LivingBoss {
     AbilityPhases phases;
 
     public WickedCroneBoss(final Context context) {
-        super(context, EnemyType.WICKED_CRONE);
+        super(context, EnemyType.WICKED_CRONE, EntityType.WITCH);
     }
 
     @Override

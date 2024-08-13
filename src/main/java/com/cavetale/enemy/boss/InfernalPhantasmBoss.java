@@ -15,6 +15,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.entity.Blaze;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.PiglinBrute;
 import org.bukkit.entity.Zoglin;
 
@@ -23,7 +24,7 @@ public final class InfernalPhantasmBoss extends LivingBoss {
     AbilityPhases phases;
 
     public InfernalPhantasmBoss(final Context context) {
-        super(context, EnemyType.INFERNAL_PHANTASM);
+        super(context, EnemyType.INFERNAL_PHANTASM, EntityType.BLAZE);
     }
 
     public void spawn(Location loc) {

@@ -15,6 +15,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
 import org.bukkit.entity.Vex;
 import org.bukkit.inventory.EntityEquipment;
@@ -24,7 +25,7 @@ public final class ForgottenBoss extends LivingBoss {
     AbilityPhases phases = new AbilityPhases();
 
     public ForgottenBoss(final Context context) {
-        super(context, EnemyType.FORGOTTEN);
+        super(context, EnemyType.FORGOTTEN, EntityType.EVOKER);
     }
 
     @Override

@@ -44,7 +44,7 @@ public final class QuickBoss extends LivingBoss {
     public QuickBoss(final Context context, final EnemyType enemyType,
                      final String displayName,
                      final EntityType bossType, final EntityType addType) {
-        super(context, enemyType);
+        super(context, enemyType, bossType);
         this.displayName = Component.text(displayName, NamedTextColor.RED, TextDecoration.BOLD);
         this.bossType = bossType;
         this.addType = addType;

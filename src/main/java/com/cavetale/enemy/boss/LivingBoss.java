@@ -7,6 +7,7 @@ import com.cavetale.enemy.TypedEnemy;
 import com.cavetale.mytems.event.combat.DamageCalculationEvent;
 import com.cavetale.mytems.event.combat.DamageFactor;
 import lombok.Getter;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 
@@ -15,8 +16,8 @@ public abstract class LivingBoss extends LivingEnemy implements TypedEnemy {
     @Getter protected double health = 500;
     protected final EnemyType enemyType;
 
-    protected LivingBoss(final Context context, final EnemyType enemyType) {
-        super(context);
+    protected LivingBoss(final Context context, final EnemyType enemyType, final EntityType entityType) {
+        super(context, entityType);
         this.enemyType = enemyType;
     }
 
