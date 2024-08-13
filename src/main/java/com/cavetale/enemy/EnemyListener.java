@@ -8,7 +8,6 @@ import com.cavetale.worldmarker.entity.EntityMarker;
 import com.destroystokyo.paper.event.entity.EntityPathfindEvent;
 import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
 import com.destroystokyo.paper.event.entity.WitchConsumePotionEvent;
-import java.util.concurrent.ThreadLocalRandom;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.AbstractArrow;
@@ -130,17 +129,6 @@ public final class EnemyListener implements Listener {
                 event.setCancelled(true);
             }
         }
-        // Lower arrow damage to bosses
-        if (proj instanceof AbstractArrow arrow && !(arrow instanceof Trident) && proj.getShooter() instanceof Player shooter && event.getHitEntity() != null) {
-            final Enemy enemy = Enemy.of(event.getHitEntity());
-            if (enemy instanceof TypedEnemy typed && typed.isBoss()) {
-                final double damage = Math.max(1.0, arrow.getDamage() - 10.0);
-                arrow.setDamage(damage);
-                if (ThreadLocalRandom.current().nextDouble() * 5.0 >= damage) {
-                    event.setCancelled(true);
-                }
-            }
-        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -188,11 +176,21 @@ public final class EnemyListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     protected void onDamageCalculation(DamageCalculationEvent event) {
         Enemy enemy = Enemy.of(event.getTarget());
         if (enemy == null) return;
         enemy.onDefendingDamageCalculation(event);
+        // Lower arrow damage to bosses.
+        // Arrow damage multiplies its damage value with velocity.
+        final var calc = event.getCalculation();
+        if (enemy instanceof TypedEnemy typed && typed.isBoss() && calc.getProjectile() instanceof AbstractArrow arrow && !(arrow instanceof Trident) && arrow.getShooter() instanceof Player shooter) {
+            final double damage = Math.max(0.0, calc.getBaseDamage() - 12.0);
+            arrow.setDamage(damage);
+            if (damage < 0.01) {
+                calc.getEvent().setCancelled(true);
+            }
+        }
     }
 
     @EventHandler
