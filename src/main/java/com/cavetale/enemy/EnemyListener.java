@@ -18,6 +18,7 @@ import org.bukkit.entity.Trident;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -204,6 +205,15 @@ public final class EnemyListener implements Listener {
         Enemy enemy = Enemy.of(event.getEntity());
         if (enemy != null) {
             enemy.onEntityPotionEffect(event);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    private void onEntityCombust(EntityCombustEvent event) {
+        Enemy enemy = Enemy.of(event.getEntity());
+        if (enemy == null) return;
+        if (enemy instanceof TypedEnemy typed && typed.isBoss()) {
+            event.setCancelled(true);
         }
     }
 }
