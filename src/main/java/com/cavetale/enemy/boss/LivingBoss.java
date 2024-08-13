@@ -4,8 +4,6 @@ import com.cavetale.enemy.Context;
 import com.cavetale.enemy.EnemyType;
 import com.cavetale.enemy.LivingEnemy;
 import com.cavetale.enemy.TypedEnemy;
-import com.cavetale.mytems.event.combat.DamageCalculationEvent;
-import com.cavetale.mytems.event.combat.DamageFactor;
 import lombok.Getter;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -45,22 +43,6 @@ public abstract class LivingBoss extends LivingEnemy implements TypedEnemy {
         case LAVA:
             event.setCancelled(true);
         default: break;
-        }
-    }
-
-    /**
-     * Make sure the boss has a reasonable minimum armor and
-     * protection enchantments.
-     */
-    @Override
-    public void onDefendingDamageCalculation(DamageCalculationEvent event) {
-        event.setIfApplicable(DamageFactor.ARMOR, value -> Math.min(0.2, value));
-        //event.setIfApplicable(DamageFactor.PROTECTION, value -> Math.min(0.2, value));
-        event.setIfApplicable(DamageFactor.RESISTANCE, value -> Math.min(0.2, value));
-        if (event.getEntityDamageEvent().getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
-            double base = event.getCalculation().getBaseDamage();
-            event.getCalculation().setBaseDamage(Math.max(0.0, base - 5.0));
-            event.setHandled(true);
         }
     }
 

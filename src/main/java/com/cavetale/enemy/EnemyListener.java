@@ -190,6 +190,7 @@ public final class EnemyListener implements Listener {
             // Give bosses full armor and enchantment protection.
             calc.setIfApplicable(DamageFactor.ARMOR, 0.2);
             calc.setIfApplicable(DamageFactor.PROTECTION, 0.2);
+            calc.setIfApplicable(DamageFactor.RESISTANCE, 0.5);
             // Lower arrow damage to bosses.
             // Arrow damage multiplies its damage value with velocity.
             if (calc.getProjectile() instanceof AbstractArrow arrow && !(arrow instanceof Trident) && arrow.getShooter() instanceof Player shooter) {
