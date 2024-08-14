@@ -7,6 +7,7 @@ import com.cavetale.enemy.ability.ArrowStormAbility;
 import com.cavetale.enemy.ability.EggLauncherAbility;
 import com.cavetale.enemy.ability.FireballAbility;
 import com.cavetale.enemy.ability.HomeAbility;
+import com.cavetale.enemy.ability.LightningAbility;
 import com.cavetale.enemy.ability.PauseAbility;
 import com.cavetale.enemy.ability.SpawnAddsAbility;
 import com.cavetale.enemy.ability.ThrowAbility;
@@ -111,7 +112,6 @@ public final class QuickBoss extends LivingBoss {
         living = (LivingEntity) location.getWorld().spawn(location, bossType.getEntityClass(), this::prep);
         markLiving();
         phases = new AbilityPhases();
-        phases.addAbility(new ThrowAbility(this, context));
         PauseAbility pause = phases.addAbility(new PauseAbility(this, context, 100));
         SpawnAddsAbility adds = phases.addAbility(new SpawnAddsAbility(this, context));
         if (addType == EntityType.BEE) {
@@ -138,10 +138,10 @@ public final class QuickBoss extends LivingBoss {
             arrowStorm.setDamage(15.0);
             arrowStorm.setDuration(200);
             arrowStorm.setInterval(1);
-        } else if (enemyType == EnemyType.HEINOUS_HEN || enemyType == SPECTER) {
-            EggLauncherAbility eggLauncher = phases.addAbility(new EggLauncherAbility(this, context));
-            eggLauncher.setDuration(20 * 30);
-            eggLauncher.setInterval(60);
+        } else if (enemyType == SPECTER) {
+            LightningAbility lightning = phases.addAbility(new LightningAbility(this, context));
+            lightning.setDuration(20 * 60);
+            lightning.setInterval(60);
         } else if (enemyType == EnemyType.PIGLIN_BRUTE_BOSS) {
             FireballAbility fireballs = phases.addAbility(new FireballAbility(this, context));
             fireballs.setVelocity(3.0);
@@ -153,8 +153,12 @@ public final class QuickBoss extends LivingBoss {
             if (living instanceof Breedable breedable) {
                 breedable.setAgeLock(true);
             }
+            phases.addAbility(new ThrowAbility(this, context));
         } else if (enemyType == EnemyType.HEINOUS_HEN) {
             Prep.attr(living, Attribute.GENERIC_MOVEMENT_SPEED, 0.1);
+            EggLauncherAbility eggLauncher = phases.addAbility(new EggLauncherAbility(this, context));
+            eggLauncher.setDuration(20 * 30);
+            eggLauncher.setInterval(3);
         }
         phases.begin();
     }

@@ -9,6 +9,8 @@ import java.util.Random;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -29,13 +31,18 @@ public final class EggLauncherAbility extends AbstractAbility {
     public void onBegin() {
         enemy.setInvulnerable(true);
         enemy.setImmobile(true);
-        enemy.getWorld().spawnParticle(Particle.FLASH, enemy.getEyeLocation(), 5, 0.5, 0.5, 0.5, 0.0);
+        enemy.getWorld().spawnParticle(Particle.FLASH, enemy.getEyeLocation(), 10, 0.0, 0.0, 0.0, 0.0);
+        enemy.getWorld().playSound(enemy.getEyeLocation(), Sound.ENTITY_CHICKEN_HURT, SoundCategory.HOSTILE, 2f, 0.5f);
     }
 
     @Override
     public void onEnd() {
         enemy.setInvulnerable(false);
         enemy.setImmobile(false);
+        if (enemy.isValid()) {
+            enemy.getWorld().spawnParticle(Particle.SMOKE, enemy.getEyeLocation(), 5, 0.5, 0.5, 0.5, 0.0);
+            enemy.getWorld().playSound(enemy.getEyeLocation(), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.HOSTILE, 2f, 1f);
+        }
     }
 
     private double rnd() {
@@ -59,12 +66,13 @@ public final class EggLauncherAbility extends AbstractAbility {
         Vector velo = target.getEyeLocation()
             .subtract(enemy.getEyeLocation())
             .toVector().normalize()
-            .add(new Vector(rnd() * 0.1,
-                            random.nextDouble() * 0.2,
-                            rnd() * 0.1))
+            .add(new Vector(rnd() * 0.05,
+                            random.nextDouble() * 0.05,
+                            rnd() * 0.05))
             .multiply(2.0);
         Egg egg = (Egg) enemy.launchProjectile(Egg.class, velo);
         EntityMarker.setId(egg, EXPLOSIVE_EGG_ID);
+        enemy.getWorld().playSound(enemy.getEyeLocation(), Sound.ENTITY_EGG_THROW, SoundCategory.HOSTILE, 1f, 1f);
         return true;
     }
 }
