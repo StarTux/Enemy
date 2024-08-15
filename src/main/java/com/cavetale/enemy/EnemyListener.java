@@ -16,7 +16,6 @@ import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Trident;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -61,7 +60,7 @@ public final class EnemyListener implements Listener {
         handle.onEntityExplode(event);
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
     private void onEntityDamage(EntityDamageEvent event) {
         Enemy enemy = Enemy.of(event.getEntity());
         if (enemy != null) {
@@ -70,6 +69,13 @@ public final class EnemyListener implements Listener {
             case ENTITY_ATTACK:
             case PROJECTILE:
                 enemy.setLastDamage(System.currentTimeMillis());
+                break;
+            case THORNS:
+                // No thorns for bosses
+                if (enemy instanceof TypedEnemy typed && typed.isBoss()) {
+                    event.setCancelled(true);
+                }
+                break;
             default: break;
             }
         }
@@ -79,7 +85,7 @@ public final class EnemyListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = false, priority = EventPriority.HIGH)
-    void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+    private void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         Enemy attackerEnemy = Enemy.of(event.getDamager());
         Enemy targetEnemy = Enemy.of(event.getEntity());
         if (attackerEnemy != null && targetEnemy != null) {
@@ -114,12 +120,8 @@ public final class EnemyListener implements Listener {
         final Projectile proj = event.getEntity();
         // Explosive egg ability
         if (EntityMarker.hasId(proj, EggLauncherAbility.EXPLOSIVE_EGG_ID)) {
-            if (!(event.getHitEntity() instanceof Player)) {
-                event.setCancelled(true);
-            } else {
-                proj.getWorld().createExplosion(proj, 1.0f);
-                proj.remove();
-            }
+            proj.getWorld().createExplosion(proj, 1.0f);
+            proj.remove();
         } else if (EntityMarker.hasId(proj, FireworkAbility.FIREWORK_ID)) {
             // doesn't seem to work with fireworks
             if (!(event.getHitEntity() instanceof Player)) {
@@ -131,6 +133,12 @@ public final class EnemyListener implements Listener {
             final Enemy shooterEnemy = Enemy.of(shooterEntity);
             final Enemy targetEnemy = Enemy.of(event.getHitEntity());
             if (shooterEnemy != null && targetEnemy != null) {
+                event.setCancelled(true);
+            }
+        }
+        // Bosses dodge arrows with 2 damage or less
+        if (event.getHitEntity() != null && Enemy.of(event.getHitEntity()) instanceof TypedEnemy enemy && enemy.isBoss()) {
+            if (proj instanceof AbstractArrow arrow && arrow.isShotFromCrossbow()) {
                 event.setCancelled(true);
             }
         }
@@ -191,19 +199,20 @@ public final class EnemyListener implements Listener {
             event.setHandled(true);
             final var calc = event.getCalculation();
             // Give bosses full armor and enchantment protection.
-            calc.setIfApplicable(DamageFactor.ARMOR, 0.15);
-            calc.setIfApplicable(DamageFactor.PROTECTION, 0.2);
+            final int difficultyLevel = enemy.getDifficultyLevel();
+            final double preFactor = event.getCalculation().isMeleeAttack()
+                ? 0.3
+                : 0.2;
+            final double armor = preFactor * Math.max(0.15, Math.min(1.0, (10 - difficultyLevel) * 0.1));
+            calc.setIfApplicable(DamageFactor.ARMOR, armor);
+            calc.setIfApplicable(DamageFactor.PROTECTION, 1.0);
             calc.setIfApplicable(DamageFactor.RESISTANCE, 1.0);
             calc.setIfApplicable(DamageFactor.HELMET, 1.0);
             calc.setIfApplicable(DamageFactor.SHIELD, 1.0);
             // Lower arrow damage to bosses.
             // Arrow damage multiplies its damage value with velocity.
-            if (calc.getProjectile() instanceof AbstractArrow arrow && !(arrow instanceof Trident) && arrow.getShooter() instanceof Player shooter) {
-                final double damage = Math.max(0.0, calc.getBaseDamage() - 12.0);
-                arrow.setDamage(damage);
-                if (damage < 0.01) {
-                    calc.getEvent().setCancelled(true);
-                }
+            if (calc.isArrowAttack() && calc.attackerIsPlayer()) {
+                calc.getOrCreateBaseDamageModifier().addFlatBonus(-12, "enemy:boss_arrow");
             }
         }
     }
