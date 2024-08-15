@@ -146,6 +146,7 @@ public abstract class Enemy {
      * Get the Enemy that belongs to this entity, or null if none is found.
      */
     public static Enemy of(Entity entity) {
+        if (entity == null) return null;
         EnemyHandle handle = EnemyPlugin.getHandle(entity);
         if (handle == null) return null;
         return handle.getEnemy();
