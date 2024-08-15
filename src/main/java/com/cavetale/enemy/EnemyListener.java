@@ -16,6 +16,8 @@ import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Snowball;
+import org.bukkit.entity.Snowman;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -82,6 +84,13 @@ public final class EnemyListener implements Listener {
         EnemyHandle handle = EnemyHandle.of(event.getEntity());
         if (handle == null) return;
         handle.onEntityDamage(event);
+    }
+
+    @EventHandler(ignoreCancelled = false, priority = EventPriority.LOWEST)
+    private void onEntityDamageByEntityLowest(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Snowball snowball && snowball.getShooter() instanceof Snowman snowman && Enemy.of(snowman) instanceof TypedEnemy typed && typed.getEnemyType() == EnemyType.ICE_GOLEM) {
+            event.setDamage(25.0);
+        }
     }
 
     @EventHandler(ignoreCancelled = false, priority = EventPriority.HIGH)
