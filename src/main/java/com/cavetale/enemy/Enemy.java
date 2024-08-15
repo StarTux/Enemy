@@ -43,6 +43,7 @@ public abstract class Enemy {
     @Getter @Setter protected Location spawnLocation;
     private boolean removed;
     @Getter @Setter private long lastDamage; // Last legit combat dmg!
+    @Getter @Setter protected int difficultyLevel;
 
     protected Enemy(@NonNull final Context context) {
         this.enemyId = nextEnemyId++;
