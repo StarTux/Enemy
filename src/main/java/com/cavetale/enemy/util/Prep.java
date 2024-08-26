@@ -73,6 +73,7 @@ public final class Prep {
         entity.setMaximumNoDamageTicks(0);
         disableEquipmentDrop(entity);
         Tags.set(entity.getPersistentDataContainer(), namespacedKey("skillPoints"), 100);
+        entity.setRemoveWhenFarAway(false);
     }
 
     public static void add(LivingEntity entity) {
