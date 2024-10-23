@@ -43,12 +43,15 @@ public abstract class Enemy {
     @Getter @Setter protected Location spawnLocation;
     private boolean removed;
     @Getter @Setter private long lastDamage; // Last legit combat dmg!
+    @Getter private long spawnTime;
+    @Getter @Setter private long glowTime;
     @Getter @Setter protected int difficultyLevel;
 
     protected Enemy(@NonNull final Context context) {
         this.enemyId = nextEnemyId++;
         ID_MAP.put(enemyId, this);
         this.context = context;
+        this.spawnTime = System.currentTimeMillis();
     }
 
     public static Enemy ofEnemyId(int theEnemyId) {
@@ -63,6 +66,7 @@ public abstract class Enemy {
 
     public final void spawn() {
         spawn(spawnLocation);
+        this.spawnTime = System.currentTimeMillis();
     }
 
     /**

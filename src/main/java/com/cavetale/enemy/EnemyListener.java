@@ -64,14 +64,13 @@ public final class EnemyListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
     private void onEntityDamage(EntityDamageEvent event) {
-        Enemy enemy = Enemy.of(event.getEntity());
+        // Enemy
+        final Enemy enemy = Enemy.of(event.getEntity());
         if (enemy != null) {
-            if (enemy.isInvulnerable()) event.setCancelled(true);
+            if (enemy.isInvulnerable()) {
+                event.setCancelled(true);
+            }
             switch (event.getCause()) {
-            case ENTITY_ATTACK:
-            case PROJECTILE:
-                enemy.setLastDamage(System.currentTimeMillis());
-                break;
             case THORNS:
                 // No thorns for bosses
                 if (enemy instanceof TypedEnemy typed && typed.isBoss()) {
@@ -81,6 +80,7 @@ public final class EnemyListener implements Listener {
             default: break;
             }
         }
+        // Handle
         EnemyHandle handle = EnemyHandle.of(event.getEntity());
         if (handle == null) return;
         handle.onEntityDamage(event);
@@ -270,5 +270,32 @@ public final class EnemyListener implements Listener {
             event.setHatching(false);
             event.setNumHatches((byte) 0);
         }
+    }
+
+    /**
+     * Update the last damage timer.
+     */
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    private void onEntityDamageMonitor(EntityDamageEvent event) {
+        final Enemy enemy = Enemy.of(event.getEntity());
+        if (enemy == null) return;
+        if (enemy.isInvulnerable()) event.setCancelled(true);
+        switch (event.getCause()) {
+        case ENTITY_ATTACK:
+        case PROJECTILE:
+            enemy.setLastDamage(System.currentTimeMillis());
+            break;
+        default: break;
+        }
+    }
+
+    /**
+     * Update the last damage timer.
+     */
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    private void onEntityDamageByEntityMonitor(EntityDamageByEntityEvent event) {
+        final Enemy enemy = Enemy.of(event.getDamager());
+        if (enemy == null) return;
+        enemy.setLastDamage(System.currentTimeMillis());
     }
 }
