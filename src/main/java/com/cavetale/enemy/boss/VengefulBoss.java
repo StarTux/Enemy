@@ -79,9 +79,9 @@ public final class VengefulBoss extends LivingBoss {
     private void prepAdd(Ghast ghast) {
         Prep.add(ghast);
         Prep.health(ghast, 40);
-        Prep.attr(ghast, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0);
-        Prep.attr(ghast, Attribute.GENERIC_ARMOR, 20.0); // dia=20
-        Prep.attr(ghast, Attribute.GENERIC_ARMOR_TOUGHNESS, 8.0); // dia=8
+        Prep.attr(ghast, Attribute.KNOCKBACK_RESISTANCE, 1.0);
+        Prep.attr(ghast, Attribute.ARMOR, 20.0); // dia=20
+        Prep.attr(ghast, Attribute.ARMOR_TOUGHNESS, 8.0); // dia=8
     }
 
     @Override

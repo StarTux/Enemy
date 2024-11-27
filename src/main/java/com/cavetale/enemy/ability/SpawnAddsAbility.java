@@ -202,12 +202,12 @@ public final class SpawnAddsAbility extends AbstractAbility {
 //                                       Bee.class, e -> {
 //                                           e.setAnger(72000);
 //                                           prepAdd(e);
-//                                           e.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(12.0f);
+//                                           e.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(12.0f);
 //                                       }));
 //         adds.add(mob.getWorld().spawn(mob.getEyeLocation(),
 //                                       Rabbit.class, e -> {
 //                                           e.setRabbitType(Rabbit.Type.THE_KILLER_BUNNY);
-//                                           e.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0f);
+//                                           e.getAttribute(Attribute.MAX_HEALTH).setBaseValue(20.0f);
 //                                           e.setHealth(20.0f);
 //                                       }));
 //     }

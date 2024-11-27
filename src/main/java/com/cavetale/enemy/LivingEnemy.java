@@ -228,7 +228,7 @@ public abstract class LivingEnemy extends Enemy {
     @Override
     public double getMaxHealth() {
         return living != null
-            ? living.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()
+            ? living.getAttribute(Attribute.MAX_HEALTH).getValue()
             : 0;
     }
 
@@ -300,20 +300,20 @@ public abstract class LivingEnemy extends Enemy {
     public void setImmobile(boolean immobile) {
         if (living == null) return;
         if (immobile) {
-            backupSpeed = living.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue();
-            living.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+            backupSpeed = living.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue();
+            living.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0);
             Entity vehicle = living.getVehicle();
             if (vehicle instanceof Mob) {
                 Mob veh = (Mob) vehicle;
-                mountBackupSpeed = veh.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue();
-                veh.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+                mountBackupSpeed = veh.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue();
+                veh.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0);
             }
         } else {
-            living.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(backupSpeed);
+            living.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(backupSpeed);
             Entity vehicle = living.getVehicle();
             if (vehicle instanceof Mob) {
                 Mob veh = (Mob) vehicle;
-                veh.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(mountBackupSpeed);
+                veh.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(mountBackupSpeed);
             }
         }
     }

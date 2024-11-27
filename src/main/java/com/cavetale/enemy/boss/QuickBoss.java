@@ -155,7 +155,7 @@ public final class QuickBoss extends LivingBoss {
             }
             phases.addAbility(new ThrowAbility(this, context));
         } else if (enemyType == EnemyType.HEINOUS_HEN) {
-            Prep.attr(living, Attribute.GENERIC_MOVEMENT_SPEED, 0.1);
+            Prep.attr(living, Attribute.MOVEMENT_SPEED, 0.1);
             EggLauncherAbility eggLauncher = phases.addAbility(new EggLauncherAbility(this, context));
             eggLauncher.setDuration(20 * 30);
             eggLauncher.setInterval(3);

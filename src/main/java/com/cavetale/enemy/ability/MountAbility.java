@@ -32,7 +32,7 @@ public final class MountAbility extends AbstractAbility {
         Spider mount = enemy.getWorld().spawn(enemy.getLocation(), Spider.class, e -> {
                 e.setPersistent(false);
                 e.setRemoveWhenFarAway(true);
-                e.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
+                e.getAttribute(Attribute.MAX_HEALTH).setBaseValue(health);
                 e.setHealth(health);
             });
         context.registerTemporaryEntity(mount);

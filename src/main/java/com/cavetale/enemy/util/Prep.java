@@ -52,7 +52,7 @@ public final class Prep {
     }
 
     public static void health(LivingEntity entity, double health, double maxHealth) {
-        attr(entity, Attribute.GENERIC_MAX_HEALTH, maxHealth);
+        attr(entity, Attribute.MAX_HEALTH, maxHealth);
         entity.setHealth(Math.min(health, maxHealth));
     }
 
@@ -63,11 +63,11 @@ public final class Prep {
     public static void boss(LivingEntity entity) {
         if (entity instanceof Zombie zombie) zombie.setShouldBurnInDay(false);
         if (entity instanceof AbstractSkeleton skeleton) skeleton.setShouldBurnInDay(false);
-        attr(entity, Attribute.GENERIC_ATTACK_DAMAGE, 15.0);
-        attr(entity, Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0);
-        attr(entity, Attribute.GENERIC_ARMOR, 20.0); // diamond or netherite
-        attr(entity, Attribute.GENERIC_ARMOR_TOUGHNESS, 12.0); // netherite
-        entity.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(Math.max(2.0, (4.0 / entity.getHeight())));
+        attr(entity, Attribute.ATTACK_DAMAGE, 15.0);
+        attr(entity, Attribute.KNOCKBACK_RESISTANCE, 1.0);
+        attr(entity, Attribute.ARMOR, 20.0); // diamond or netherite
+        attr(entity, Attribute.ARMOR_TOUGHNESS, 12.0); // netherite
+        entity.getAttribute(Attribute.SCALE).setBaseValue(Math.max(2.0, (4.0 / entity.getHeight())));
         entity.setCustomNameVisible(true);
         entity.setPersistent(false);
         entity.setMaximumNoDamageTicks(0);
@@ -79,9 +79,9 @@ public final class Prep {
     public static void add(LivingEntity entity) {
         entity.setPersistent(false);
         if (entity instanceof Spider) {
-            entity.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(0.35);
+            entity.getAttribute(Attribute.SCALE).setBaseValue(0.35);
         } else {
-            entity.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(0.75);
+            entity.getAttribute(Attribute.SCALE).setBaseValue(0.75);
         }
         disableEquipmentDrop(entity);
     }
@@ -91,6 +91,6 @@ public final class Prep {
     }
 
     public static void movementSpeed(LivingEntity entity, double speed) {
-        entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
+        entity.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
     }
 }
