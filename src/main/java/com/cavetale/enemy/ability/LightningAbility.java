@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.LightningStrike;
@@ -31,7 +32,7 @@ public final class LightningAbility extends AbstractAbility {
     @Override
     public void onBegin() {
         lightningTarget = null;
-        enemy.getWorld().spawnParticle(Particle.FLASH, enemy.getEyeLocation(), 5, 0.5, 0.5, 0.5, 0.0);
+        enemy.getWorld().spawnParticle(Particle.FLASH, enemy.getEyeLocation(), 5, 0.5, 0.5, 0.5, 0.0, Color.YELLOW);
         lightningSpots.clear();
     }
 

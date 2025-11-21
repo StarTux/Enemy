@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -31,7 +32,7 @@ public final class EggLauncherAbility extends AbstractAbility {
     public void onBegin() {
         enemy.setInvulnerable(true);
         enemy.setImmobile(true);
-        enemy.getWorld().spawnParticle(Particle.FLASH, enemy.getEyeLocation(), 10, 0.0, 0.0, 0.0, 0.0);
+        enemy.getWorld().spawnParticle(Particle.FLASH, enemy.getEyeLocation(), 10, 0.0, 0.0, 0.0, 0.0, Color.BLUE);
         enemy.getWorld().playSound(enemy.getEyeLocation(), Sound.ENTITY_CHICKEN_HURT, SoundCategory.HOSTILE, 2f, 0.5f);
     }
 
