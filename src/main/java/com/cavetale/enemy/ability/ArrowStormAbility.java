@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -36,7 +37,7 @@ public final class ArrowStormAbility extends AbstractAbility {
     public void onBegin() {
         enemy.setInvulnerable(true);
         enemy.setImmobile(true);
-        enemy.getWorld().spawnParticle(Particle.FLASH, enemy.getEyeLocation(), 5, 0.5, 0.5, 0.5, 0.0);
+        enemy.getWorld().spawnParticle(Particle.FLASH, enemy.getEyeLocation(), 5, 0.5, 0.5, 0.5, 0.0, Color.RED);
     }
 
     @Override
