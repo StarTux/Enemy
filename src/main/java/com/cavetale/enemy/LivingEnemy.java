@@ -256,7 +256,7 @@ public abstract class LivingEnemy extends Enemy {
      */
     @Override
     public boolean isValid() {
-        return living != null && !living.isDead();
+        return living != null && !living.isDead() && living.isValid();
     }
 
     /**
